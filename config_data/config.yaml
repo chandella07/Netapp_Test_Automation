@@ -1,0 +1,217 @@
+System:
+  Cluster_IP : {{CLUSTER_IP}}
+  Cluster_name : {{CLUSTER_NAME}}
+  Cluster_UUID : {{CLUSTER_UUID}}
+  Cluster_Serial_Number : {{CLUSTER_SERIAL_NO}}
+  Username : {{USERNAME}}
+  Password : {{PASSWORD}}
+  Netapp_Release : {{RELEASE}}
+ 
+Roles:
+  role1 : {{ADMIN}}
+  role3 : {{AUTOSUPPORT}}
+  role4 : {{BACKUP}}
+  role5 : {{READONLY}}
+
+Node:
+  node1 : {{NODE1_NAME}}
+  node2 : {{NODE2_NAME}}  
+
+epsilon_node:
+  name : {{NULL}}
+
+node1:
+  serial_number : {{NODE1_SERIAL_NO}}
+  filer_model : {{NODE1_MODEL}}
+  firmware_version : {{NODE1_FIRMWARE}}
+  disk_capacity : {{NODE1_DISK_CAPACITY}}
+  capacity_of_NVRam : {{NODE1_NVRAM}}
+  timezone : {{NODE1_TIMEZONE}}
+  root_vol_name : {{NODE1_ROOT_VOL_NAME}}
+  root_vol_size : {{NODE1_ROOT_VOL_SIZE}}
+  snapshot_space_used : {{NODE1_SNAPSHOT_USED}}
+  percent_snapshot_space : {{NODE1_SNAPSHOT_SPACE}}
+  snapshot_reserve_percent : {{NODE1_SNAPSHOT_RESERVE}}
+  HA_pair : {{NODE1_HA}}
+  Partner_node : {{NODE1_PARTNER_NODENAME}}
+
+node2:
+  serial_number : {{NODE2_SERIAL_NO}}
+  filer_model : {{NODE2_MODEL}}
+  firmware_version : {{NODE2_FIRMWARE}}
+  disk_capacity : {{NODE2_DISK_CAPACITY}}
+  capacity_of_NVRam : {{NODE2_NVRAM}}
+  timezone : {{NODE2_TIMEZONE}}
+  root_vol_name : {{NODE2_ROOT_VOL_NAME}}
+  root_vol_size : {{NODE2_ROOT_VOL_SIZE}}
+  snapshot_space_used : {{NODE2_SNAPSHOT_USED}}
+  percent_snapshot_space : {{NODE2_SNAPSHOT_SPACE}}
+  snapshot_reserve_percent : {{NODE2_SNAPSHOT_RESERVE}}
+  HA_pair : {{NODE2_HA}}
+  Partner_node : {{NODE2_PARTNER_NODENAME}}
+
+node1_interface:
+  e0e : {{NODE1_INTERFACE1_IP}}
+  e0f : {{NODE1_INTERFACE2_IP}}
+
+node2_interface:
+  e0e : {{NODE2_INTERFACE1_IP}}
+  e0f : {{NODE2_INTERFACE2_IP}}
+
+node1_vlan:
+  a1d-210 : {{NODE1_VLAN1}}
+  a1d-220 : {{NODE1_VLAN2}}
+  e0b-270 : {{NODE1_VLAN3}}
+  e0b-666 : {{NODE1_VLAN4}}
+
+node2_vlan:
+  a1d-210 : {{NODE2_VLAN1}}
+  a1d-220 : {{NODE2_VLAN2}}
+  e0b-270 : {{NODE2_VLAN3}}
+  e0b-666 : {{NODE2_VLAN4}}
+  
+failover_groups:
+  group1 : {{FG1}}
+  group2 : {{FG2}}
+  group3 : {{FG3}}
+  group4 : {{FG4}}
+
+SVM:
+  svm1: {{SVM1}}
+  svm2: {{SVM2}}
+
+svm1:
+  language : {{SVM1_LANG}}
+  root_vol_name : {{SVM1_ROOT_VOL_NAME}}
+  root_vol_state : {{SVM1_ROOT_VOL_STATE}}
+  root_vol_type : {{SVM1_ROOT_VOL_TYPE}}
+  root_vol_junction_path : {{SVM1_ROOT_VOL_JPATH}}
+  root_vol_used_percentage : {{SVM1_ROOT_VOL_USED}}
+  peering : {{SVM1_PEER}}
+  export_policy : {{SVM1_POLICY}}
+  nfs_enabled : {{SVM1_NFS}}
+  cifs_enabled : {{SVM1_CIFS}}
+  iscsi_enabled : {{SVM1_ISCSI}}
+  ndmp_enabled : {{SVM1_NDMP}}
+  
+svm2:
+  language : {{SVM2_LANG}}
+  root_vol_name : {{SVM2_ROOT_VOL_NAME}}
+  root_vol_state : {{SVM2_ROOT_VOL_STATE}}
+  root_vol_type : {{SVM2_ROOT_VOL_TYPE}}
+  root_vol_junction_path : {{SVM2_ROOT_VOL_JPATH}}
+  root_vol_used_percentage : {{SVM2_ROOT_VOL_USED}}
+  peering : {{SVM2_PEER}}
+  export_policy : {{SVM2_POLICY}}
+  nfs_enabled : {{SVM2_NFS}}
+  cifs_enabled : {{SVM2_CIFS}}
+  iscsi_enabled : {{SVM2_ISCSI}}
+  ndmp_enabled : {{SVM2_NDMP}}
+
+svm1_peering:
+  peer_svm : {{SVM1_PEERSVM}}
+
+Cluster_routing_groups:
+  route1 : {{CLUSTER_RGROUP1}}
+  route2 : {{CLUSTER_RGROUP2}}
+  route3 : {{CLUSTER_RGROUP3}}
+  route4 : {{CLUSTER_RGROUP4}}
+
+svm1_routing_groups:
+  route1 : {{SVM1_RGROUP1}}
+  route2 : {{SVM1_RGROUP2}}
+
+svm2_routing_groups:
+  route1 : {{SVM2_RGROUP1}}
+
+svm1_lif:
+  nfs3lif-a : {{SVM1_LIF1}}
+  nfs3lif-b : {{SVM1_LIF2}}
+
+svm2_lif:
+  nfs4lif-a : {{SVM2_LIF1}}
+  nfs4lif-b : {{SVM2_LIF2}}
+
+svm1_export-policy:
+  policy1 : {{SVM1_EX_POLICY1}}
+  policy2 : {{SVM1_EX_POLICY2}}
+
+svm2_export-policy:
+  policy1 : {{SVM2_EX_POLICY1}}
+  policy2 : {{SVM2_EX_POLICY2}}
+
+svm1_allowed_protocols:
+  protocol1 : {{SVM1_NFS}}
+  protocol2 : {{SVM1_CIFS}}
+  protocol3 : {{SVM1_FCP}}
+  protocol4 : {{SVM1_ISCSI}}
+  protocol5 : {{SVM1_NDMP}}
+
+svm1_disallowed_protocols:
+  protocol1 : {{SVM1_NULL}}
+
+svm2_allowed_protocols:
+  protocol1 : {{SVM2_NFS}}
+  protocol2 : {{SVM2_CIFS}}
+  protocol3 : {{SVM2_FCP}}
+  protocol4 : {{SVM2_ISCSI}}
+  protocol5 : {{SVM2_NDMP}}
+
+svm2_disallowed_protocols:
+  protocol1 : {{SVM2_NULL}}
+
+svm1_volumes:
+  volume1: {{SVM1_VOL1}}
+  volume2: {{SVM1_VOL2}}
+  volume3: {{SVM1_VOL3}}
+  volume4: {{SVM1_VOL4}}
+
+svm2_volumes:
+  volume1: {{SVM2_VOL1}}
+  volume2: {{SVM2_VOL2}}
+  volume3: {{SVM2_VOL3}}
+  volume4: {{SVM2_VOL4}}
+
+Aggregate:
+  aggr1 : {{AGGR1}}
+  aggr2 : {{AGGR1}}
+
+aggr1:
+  number_of_disks : {{AGGR1_DISKS}}
+  number_of_volumes : {{AGGR1_VOLS}}
+  raid_type : {{AGGR1_RAID_TYPE}}
+  state : {{AGGR1_STATE}}
+  percent_space_used : {{AGGR1_SPACE_USED}}
+
+aggr2:
+  number_of_disks : {{AGGR2_DISKS}}
+  number_of_volumes : {{AGGR2_VOLS}}
+  raid_type : {{AGGR2_RAID_TYPE}}
+  state : {{AGGR2_STATE}}
+  percent_space_used : {{AGGR2_SPACE_USED}}
+
+Access:
+  Timeout : {{TIMEOUT}}
+
+license:
+  Base : {{BASE_LICENSE}}
+  NFS : {{NFS_LICENSE}}
+  CIFS : {{CIFS_LICENSE}}
+  iSCSI : {{ISCSI_LICENSE}}
+  FCP : {{FCP_LICENSE}}
+
+Applications:
+  app_ssh : {{APP_SSH}}
+  app_console : {{APP_CON}}
+  app_ontapi : {{APP_ONTAPI}}
+  app_http : {{APP_HTTP}}
+  app_sp : {{APP_SP}}
+
+admin_auth_method:
+  method : {{MTHD_PASSWD}}
+
+DNS:
+  DNS_address : {{DNS_DOMAIN}}
+
+NTP:
+  SERVER_IP : {{ NTP_SERVER }}

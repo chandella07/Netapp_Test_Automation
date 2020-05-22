@@ -1,0 +1,1229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20180420 09:12:39.225" generator="Robot 3.0.2 (Python 2.7.5 on linux2)">
+<suite id="s1" name="TS NETAPP ACCESS &amp; TS NETAPP CXN &amp; TS NETAPP SECURITY &amp; TS NETAPP STORAGE">
+<suite source="/root/netapp_automation/testsuites/TS_NETAPP_ACCESS.robot" id="s1-s1" name="TS NETAPP ACCESS">
+<kw type="setup" name="Run Keywords" library="BuiltIn">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>Open Connection And Login</arg>
+<arg>${System.Cluster_IP}</arg>
+<arg>${System.Username}</arg>
+<arg>${System.Password}</arg>
+<arg>AND</arg>
+<arg>Check Version</arg>
+<arg>${System.Netapp_Release}</arg>
+</arguments>
+<kw name="Open Connection And Log In" library="Netapplib">
+<doc>Open a New SSH Connection to the host machine and login with </doc>
+<arguments>
+<arg>${System.Cluster_IP}</arg>
+<arg>${System.Username}</arg>
+<arg>${System.Password}</arg>
+</arguments>
+<msg timestamp="20180420 09:12:39.482" level="INFO">Logging into '10.195.49.251:22' as 'admin'.</msg>
+<msg timestamp="20180420 09:12:42.512" level="INFO">Read output: initenasnoicc::&gt;</msg>
+<status status="PASS" endtime="20180420 09:12:42.512" starttime="20180420 09:12:39.438"></status>
+</kw>
+<kw name="Check Version" library="Netapplib">
+<doc>Checks the Netapp version if found supported version PASS the test else FAIL the test</doc>
+<arguments>
+<arg>${System.Netapp_Release}</arg>
+</arguments>
+<msg timestamp="20180420 09:12:42.513" level="INFO">Executing command 'version'.</msg>
+<msg timestamp="20180420 09:12:42.842" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20180420 09:12:42.842" level="INFO">Supported version found on Netapp</msg>
+<status status="PASS" endtime="20180420 09:12:42.842" starttime="20180420 09:12:42.512"></status>
+</kw>
+<status status="PASS" endtime="20180420 09:12:42.842" starttime="20180420 09:12:39.438"></status>
+</kw>
+<test id="s1-s1-t1" name="TC_ACCESS_11">
+<kw type="setup" name="Open Connection And Log In" library="Netapplib">
+<doc>Open a New SSH Connection to the host machine and login with </doc>
+<arguments>
+<arg>${System.Cluster_IP}</arg>
+<arg>${System.Username}</arg>
+<arg>${System.Password}</arg>
+</arguments>
+<msg timestamp="20180420 09:12:42.888" level="INFO">Logging into '10.195.49.251:22' as 'admin'.</msg>
+<msg timestamp="20180420 09:12:45.621" level="INFO">Read output: initenasnoicc::&gt;</msg>
+<status status="PASS" endtime="20180420 09:12:45.621" starttime="20180420 09:12:42.843"></status>
+</kw>
+<kw type="for" name="${NODE} IN [ @{Node.values()} ]">
+<kw type="foritem" name="${NODE} = initenasnoinc1a">
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes `command` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>system node run -node ${NODE} vol status -f</arg>
+</arguments>
+<assign>
+<var>${stdout}</var>
+</assign>
+<msg timestamp="20180420 09:12:45.622" level="INFO">Executing command 'system node run -node initenasnoinc1a vol status -f'.</msg>
+<msg timestamp="20180420 09:12:46.062" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20180420 09:12:46.062" level="INFO">${stdout} = 
+Broken disks (empty)
+</msg>
+<status status="PASS" endtime="20180420 09:12:46.062" starttime="20180420 09:12:45.622"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${stdout}</arg>
+<arg>Broken disks (empty)</arg>
+</arguments>
+<status status="PASS" endtime="20180420 09:12:46.063" starttime="20180420 09:12:46.062"></status>
+</kw>
+<status status="PASS" endtime="20180420 09:12:46.063" starttime="20180420 09:12:45.622"></status>
+</kw>
+<kw type="foritem" name="${NODE} = initenasnoinc1b">
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes `command` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>system node run -node ${NODE} vol status -f</arg>
+</arguments>
+<assign>
+<var>${stdout}</var>
+</assign>
+<msg timestamp="20180420 09:12:46.063" level="INFO">Executing command 'system node run -node initenasnoinc1b vol status -f'.</msg>
+<msg timestamp="20180420 09:12:46.740" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20180420 09:12:46.740" level="INFO">${stdout} = 
+Broken disks (empty)
+</msg>
+<status status="PASS" endtime="20180420 09:12:46.740" starttime="20180420 09:12:46.063"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${stdout}</arg>
+<arg>Broken disks (empty)</arg>
+</arguments>
+<status status="PASS" endtime="20180420 09:12:46.741" starttime="20180420 09:12:46.740"></status>
+</kw>
+<status status="PASS" endtime="20180420 09:12:46.741" starttime="20180420 09:12:46.063"></status>
+</kw>
+<status status="PASS" endtime="20180420 09:12:46.741" starttime="20180420 09:12:45.621"></status>
+</kw>
+<kw type="teardown" name="Close All Connections" library="SSHLibrary">
+<doc>Closes all open connections.</doc>
+<status status="PASS" endtime="20180420 09:12:46.863" starttime="20180420 09:12:46.741"></status>
+</kw>
+<doc>*Title* : Verify the state of the disk on node.
+*Objective*: Command to check state of the disk on node.
+*Expected Output*: Return output should not contain any broken disk.
+*Prerequisite* :
+1.) cluster should be up and running.
+2.) node should be configured.</doc>
+<tags>
+<tag>Access</tag>
+<tag>DEMO</tag>
+<tag>Netapp</tag>
+</tags>
+<status status="PASS" endtime="20180420 09:12:46.863" critical="yes" starttime="20180420 09:12:42.843"></status>
+</test>
+<kw type="teardown" name="Close All Connections" library="SSHLibrary">
+<doc>Closes all open connections.</doc>
+<status status="PASS" endtime="20180420 09:12:46.864" starttime="20180420 09:12:46.864"></status>
+</kw>
+<doc>These tests are related to checking Access New functionality of Netapp.
+It covers tests related to cluster show, status and nodes.</doc>
+<status status="PASS" endtime="20180420 09:12:46.865" starttime="20180420 09:12:39.249"></status>
+</suite>
+<suite source="/root/netapp_automation/testsuites/TS_NETAPP_CXN.robot" id="s1-s2" name="TS NETAPP CXN">
+<kw type="setup" name="Run Keywords" library="BuiltIn">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>Open Connection And Login</arg>
+<arg>${System.Cluster_IP}</arg>
+<arg>${System.Username}</arg>
+<arg>${System.Password}</arg>
+<arg>AND</arg>
+<arg>Check Version</arg>
+<arg>${System.Netapp_Release}</arg>
+</arguments>
+<kw name="Open Connection And Log In" library="Netapplib">
+<doc>Open a New SSH Connection to the host machine and login with </doc>
+<arguments>
+<arg>${System.Cluster_IP}</arg>
+<arg>${System.Username}</arg>
+<arg>${System.Password}</arg>
+</arguments>
+<msg timestamp="20180420 09:12:46.955" level="INFO">Logging into '10.195.49.251:22' as 'admin'.</msg>
+<msg timestamp="20180420 09:12:49.671" level="INFO">Read output: initenasnoicc::&gt;</msg>
+<status status="PASS" endtime="20180420 09:12:49.672" starttime="20180420 09:12:46.915"></status>
+</kw>
+<kw name="Check Version" library="Netapplib">
+<doc>Checks the Netapp version if found supported version PASS the test else FAIL the test</doc>
+<arguments>
+<arg>${System.Netapp_Release}</arg>
+</arguments>
+<msg timestamp="20180420 09:12:49.673" level="INFO">Executing command 'version'.</msg>
+<msg timestamp="20180420 09:12:50.001" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20180420 09:12:50.001" level="INFO">Supported version found on Netapp</msg>
+<status status="PASS" endtime="20180420 09:12:50.001" starttime="20180420 09:12:49.672"></status>
+</kw>
+<status status="PASS" endtime="20180420 09:12:50.001" starttime="20180420 09:12:46.914"></status>
+</kw>
+<test id="s1-s2-t1" name="TC_CXN_05">
+<kw type="setup" name="Run Keywords" library="BuiltIn">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>Open Connection And Log In</arg>
+<arg>${System.Cluster_IP}</arg>
+<arg>${System.Username}</arg>
+<arg>${System.Password}</arg>
+<arg>AND</arg>
+<arg>Set Diag Mode</arg>
+</arguments>
+<kw name="Open Connection And Log In" library="Netapplib">
+<doc>Open a New SSH Connection to the host machine and login with </doc>
+<arguments>
+<arg>${System.Cluster_IP}</arg>
+<arg>${System.Username}</arg>
+<arg>${System.Password}</arg>
+</arguments>
+<msg timestamp="20180420 09:12:50.045" level="INFO">Logging into '10.195.49.251:22' as 'admin'.</msg>
+<msg timestamp="20180420 09:12:52.779" level="INFO">Read output: initenasnoicc::&gt;</msg>
+<status status="PASS" endtime="20180420 09:12:52.779" starttime="20180420 09:12:50.003"></status>
+</kw>
+<kw name="Set Diag Mode" library="Netapplib">
+<doc>This method will set the diag mode on Netapp</doc>
+<msg timestamp="20180420 09:12:52.780" level="INFO">Executing command -- 'set diag'</msg>
+<msg timestamp="20180420 09:12:52.926" level="INFO">set diag</msg>
+<msg timestamp="20180420 09:12:52.926" level="INFO">Warning:</msg>
+<msg timestamp="20180420 09:12:52.927" level="INFO">These diagnostic commands are for use by NetApp personnel only.</msg>
+<msg timestamp="20180420 09:12:53.070" level="INFO">Do you want to continue? {y|n}: y
+
+initenasnoicc::*&gt;</msg>
+<msg timestamp="20180420 09:12:53.071" level="INFO">Terminal is set to 'diag mode'</msg>
+<status status="PASS" endtime="20180420 09:12:53.071" starttime="20180420 09:12:52.780"></status>
+</kw>
+<status status="PASS" endtime="20180420 09:12:53.071" starttime="20180420 09:12:50.002"></status>
+</kw>
+<kw name="Write" library="SSHLibrary">
+<doc>Writes the given `text` on the remote machine and appends a newline.</doc>
+<arguments>
+<arg>event generate -messagename wafl.dir.link.warning -values "This is SNMP trap for automation"</arg>
+</arguments>
+<msg timestamp="20180420 09:12:53.219" level="INFO">event generate -messagename wafl.dir.link.warning -values "This is SNMP trap for automation"</msg>
+<status status="PASS" endtime="20180420 09:12:53.220" starttime="20180420 09:12:53.071"></status>
+</kw>
+<kw name="Read Until Prompt" library="SSHLibrary">
+<doc>Consumes and returns the server output until the prompt is found.</doc>
+<assign>
+<var>${stdout}</var>
+</assign>
+<msg timestamp="20180420 09:12:53.221" level="INFO">initenasnoicc::*&gt;</msg>
+<msg timestamp="20180420 09:12:53.221" level="INFO">${stdout} = 
+initenasnoicc::*&gt;</msg>
+<status status="PASS" endtime="20180420 09:12:53.221" starttime="20180420 09:12:53.221"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>4</arg>
+</arguments>
+<msg timestamp="20180420 09:12:57.222" level="INFO">Slept 4 seconds</msg>
+<status status="PASS" endtime="20180420 09:12:57.223" starttime="20180420 09:12:53.222"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes `command` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>event log show -severity WARNING -fields time,messagename,event</arg>
+</arguments>
+<assign>
+<var>${stdout}</var>
+</assign>
+<msg timestamp="20180420 09:12:57.224" level="INFO">Executing command 'event log show -severity WARNING -fields time,messagename,event'.</msg>
+<msg timestamp="20180420 09:12:59.880" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20180420 09:12:59.883" level="INFO">${stdout} = node            seqnum  time               messagename           event                                                                                                                                  ...</msg>
+<status status="PASS" endtime="20180420 09:12:59.883" starttime="20180420 09:12:57.224"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${stdout}</arg>
+<arg>wafl.dir.link.warning</arg>
+</arguments>
+<status status="PASS" endtime="20180420 09:12:59.884" starttime="20180420 09:12:59.884"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${stdout}</arg>
+<arg>This is SNMP trap for automation</arg>
+</arguments>
+<status status="PASS" endtime="20180420 09:12:59.885" starttime="20180420 09:12:59.885"></status>
+</kw>
+<kw type="teardown" name="Close All Connections" library="SSHLibrary">
+<doc>Closes all open connections.</doc>
+<status status="PASS" endtime="20180420 09:12:59.981" starttime="20180420 09:12:59.885"></status>
+</kw>
+<doc>*Title* : Verify SNMP traps.
+*Objective*: Command to check SNMP traps in event logs.
+*Expected Output*: Return output should contain SNMP trap in event error logs.
+*Prerequisite* :
+1.) cluster should be up and running.
+2.) cluster should be configured.</doc>
+<tags>
+<tag>DEMO</tag>
+<tag>Interconnection</tag>
+<tag>Netapp</tag>
+</tags>
+<status status="PASS" endtime="20180420 09:12:59.982" critical="yes" starttime="20180420 09:12:50.001"></status>
+</test>
+<kw type="teardown" name="Close All Connections" library="SSHLibrary">
+<doc>Closes all open connections.</doc>
+<status status="PASS" endtime="20180420 09:12:59.983" starttime="20180420 09:12:59.983"></status>
+</kw>
+<doc>These tests are related to checking Interconnection functionality of Netapp.
+It covers tests related to cluster, vserver, status and nodes.</doc>
+<status status="PASS" endtime="20180420 09:12:59.983" starttime="20180420 09:12:46.866"></status>
+</suite>
+<suite source="/root/netapp_automation/testsuites/TS_NETAPP_SECURITY.robot" id="s1-s3" name="TS NETAPP SECURITY">
+<kw type="setup" name="Run Keywords" library="BuiltIn">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>Open Connection And Login</arg>
+<arg>${System.Cluster_IP}</arg>
+<arg>${System.Username}</arg>
+<arg>${System.Password}</arg>
+<arg>AND</arg>
+<arg>Check Version</arg>
+<arg>${System.Netapp_Release}</arg>
+</arguments>
+<kw name="Open Connection And Log In" library="Netapplib">
+<doc>Open a New SSH Connection to the host machine and login with </doc>
+<arguments>
+<arg>${System.Cluster_IP}</arg>
+<arg>${System.Username}</arg>
+<arg>${System.Password}</arg>
+</arguments>
+<msg timestamp="20180420 09:13:00.076" level="INFO">Logging into '10.195.49.251:22' as 'admin'.</msg>
+<msg timestamp="20180420 09:13:02.790" level="INFO">Read output: initenasnoicc::&gt;</msg>
+<status status="PASS" endtime="20180420 09:13:02.790" starttime="20180420 09:13:00.033"></status>
+</kw>
+<kw name="Check Version" library="Netapplib">
+<doc>Checks the Netapp version if found supported version PASS the test else FAIL the test</doc>
+<arguments>
+<arg>${System.Netapp_Release}</arg>
+</arguments>
+<msg timestamp="20180420 09:13:02.792" level="INFO">Executing command 'version'.</msg>
+<msg timestamp="20180420 09:13:03.120" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20180420 09:13:03.120" level="INFO">Supported version found on Netapp</msg>
+<status status="PASS" endtime="20180420 09:13:03.120" starttime="20180420 09:13:02.791"></status>
+</kw>
+<status status="PASS" endtime="20180420 09:13:03.120" starttime="20180420 09:13:00.033"></status>
+</kw>
+<test id="s1-s3-t1" name="TC_SECURITY_09">
+<kw type="setup" name="Open Connection And Log In" library="Netapplib">
+<doc>Open a New SSH Connection to the host machine and login with </doc>
+<arguments>
+<arg>${System.Cluster_IP}</arg>
+<arg>${System.Username}</arg>
+<arg>${System.Password}</arg>
+</arguments>
+<msg timestamp="20180420 09:13:03.165" level="INFO">Logging into '10.195.49.251:22' as 'admin'.</msg>
+<msg timestamp="20180420 09:13:05.879" level="INFO">Read output: initenasnoicc::&gt;</msg>
+<status status="PASS" endtime="20180420 09:13:05.879" starttime="20180420 09:13:03.122"></status>
+</kw>
+<kw name="Get Dict From Node" library="Netapplib">
+<doc>This method is used to get dictionary from yaml based on node name</doc>
+<arguments>
+<arg>Applications</arg>
+</arguments>
+<assign>
+<var>&amp;{Applications_dict}</var>
+</assign>
+<msg timestamp="20180420 09:13:05.880" level="INFO">&amp;{Applications_dict} = { app_ontapi=ontapi | app_sp=service-processor | app_console=console | app_ssh=ssh | app_http=http }</msg>
+<status status="PASS" endtime="20180420 09:13:05.880" starttime="20180420 09:13:05.879"></status>
+</kw>
+<kw type="for" name="${APP} IN [ @{Applications_dict.keys()} ]">
+<kw type="foritem" name="${APP} = app_ontapi">
+<kw name="Get From Dictionary" library="robot.libraries.Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Applications_dict}</arg>
+<arg>${APP}</arg>
+</arguments>
+<assign>
+<var>${val}</var>
+</assign>
+<msg timestamp="20180420 09:13:05.881" level="INFO">${val} = ontapi</msg>
+<status status="PASS" endtime="20180420 09:13:05.881" starttime="20180420 09:13:05.881"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes `command` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>login show -vserver ${System.Cluster_name} -user-or-group-name admin -application ${val} -fields application,authmethod</arg>
+</arguments>
+<assign>
+<var>${stdout}</var>
+</assign>
+<msg timestamp="20180420 09:13:05.882" level="INFO">Executing command 'login show -vserver initenasnoicc -user-or-group-name admin -application ontapi -fields application,authmethod'.</msg>
+<msg timestamp="20180420 09:13:06.220" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20180420 09:13:06.220" level="INFO">${stdout} =   (security login show)
+vserver       user-or-group-name application authmethod 
+------------- ------------------ ----------- ---------- 
+initenasnoicc admin              ontapi      password   
+</msg>
+<status status="PASS" endtime="20180420 09:13:06.220" starttime="20180420 09:13:05.882"></status>
+</kw>
+<kw name="Get Dict Column Wise" library="Netapplib">
+<doc>This method is used to get dictionary column wise from command output</doc>
+<arguments>
+<arg>${stdout}</arg>
+<arg>col_num=3</arg>
+<arg>start_line=1</arg>
+<arg>end_line=-1</arg>
+</arguments>
+<assign>
+<var>&amp;{actual_dict}</var>
+</assign>
+<msg timestamp="20180420 09:13:06.221" level="INFO">Column wise dictionary created: '{u'authmethod': [u'password']}'</msg>
+<msg timestamp="20180420 09:13:06.221" level="INFO">&amp;{actual_dict} = { authmethod=[u'password'] }</msg>
+<status status="PASS" endtime="20180420 09:13:06.221" starttime="20180420 09:13:06.220"></status>
+</kw>
+<kw name="Get Column Value By Index" library="Netapplib">
+<doc>This method is used to get value from specific column</doc>
+<arguments>
+<arg>${actual_dict}</arg>
+<arg>heading=authmethod</arg>
+<arg>index=0</arg>
+</arguments>
+<assign>
+<var>${actual_value}</var>
+</assign>
+<msg timestamp="20180420 09:13:06.222" level="INFO">${actual_value} = password</msg>
+<status status="PASS" endtime="20180420 09:13:06.222" starttime="20180420 09:13:06.221"></status>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${actual_value}</arg>
+<arg>${admin_auth_method.method}</arg>
+</arguments>
+<msg timestamp="20180420 09:13:06.223" level="INFO">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'str'&gt;</msg>
+<status status="PASS" endtime="20180420 09:13:06.223" starttime="20180420 09:13:06.222"></status>
+</kw>
+<status status="PASS" endtime="20180420 09:13:06.223" starttime="20180420 09:13:05.881"></status>
+</kw>
+<kw type="foritem" name="${APP} = app_sp">
+<kw name="Get From Dictionary" library="robot.libraries.Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Applications_dict}</arg>
+<arg>${APP}</arg>
+</arguments>
+<assign>
+<var>${val}</var>
+</assign>
+<msg timestamp="20180420 09:13:06.223" level="INFO">${val} = service-processor</msg>
+<status status="PASS" endtime="20180420 09:13:06.223" starttime="20180420 09:13:06.223"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes `command` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>login show -vserver ${System.Cluster_name} -user-or-group-name admin -application ${val} -fields application,authmethod</arg>
+</arguments>
+<assign>
+<var>${stdout}</var>
+</assign>
+<msg timestamp="20180420 09:13:06.224" level="INFO">Executing command 'login show -vserver initenasnoicc -user-or-group-name admin -application service-processor -fields application,authmethod'.</msg>
+<msg timestamp="20180420 09:13:06.799" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20180420 09:13:06.799" level="INFO">${stdout} =   (security login show)
+vserver       user-or-group-name application       authmethod 
+------------- ------------------ ----------------- ---------- 
+initenasnoicc admin              service-proces...</msg>
+<status status="PASS" endtime="20180420 09:13:06.799" starttime="20180420 09:13:06.224"></status>
+</kw>
+<kw name="Get Dict Column Wise" library="Netapplib">
+<doc>This method is used to get dictionary column wise from command output</doc>
+<arguments>
+<arg>${stdout}</arg>
+<arg>col_num=3</arg>
+<arg>start_line=1</arg>
+<arg>end_line=-1</arg>
+</arguments>
+<assign>
+<var>&amp;{actual_dict}</var>
+</assign>
+<msg timestamp="20180420 09:13:06.800" level="INFO">Column wise dictionary created: '{u'authmethod': [u'password']}'</msg>
+<msg timestamp="20180420 09:13:06.800" level="INFO">&amp;{actual_dict} = { authmethod=[u'password'] }</msg>
+<status status="PASS" endtime="20180420 09:13:06.800" starttime="20180420 09:13:06.799"></status>
+</kw>
+<kw name="Get Column Value By Index" library="Netapplib">
+<doc>This method is used to get value from specific column</doc>
+<arguments>
+<arg>${actual_dict}</arg>
+<arg>heading=authmethod</arg>
+<arg>index=0</arg>
+</arguments>
+<assign>
+<var>${actual_value}</var>
+</assign>
+<msg timestamp="20180420 09:13:06.801" level="INFO">${actual_value} = password</msg>
+<status status="PASS" endtime="20180420 09:13:06.801" starttime="20180420 09:13:06.800"></status>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${actual_value}</arg>
+<arg>${admin_auth_method.method}</arg>
+</arguments>
+<msg timestamp="20180420 09:13:06.801" level="INFO">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'str'&gt;</msg>
+<status status="PASS" endtime="20180420 09:13:06.801" starttime="20180420 09:13:06.801"></status>
+</kw>
+<status status="PASS" endtime="20180420 09:13:06.801" starttime="20180420 09:13:06.223"></status>
+</kw>
+<kw type="foritem" name="${APP} = app_console">
+<kw name="Get From Dictionary" library="robot.libraries.Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Applications_dict}</arg>
+<arg>${APP}</arg>
+</arguments>
+<assign>
+<var>${val}</var>
+</assign>
+<msg timestamp="20180420 09:13:06.802" level="INFO">${val} = console</msg>
+<status status="PASS" endtime="20180420 09:13:06.802" starttime="20180420 09:13:06.802"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes `command` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>login show -vserver ${System.Cluster_name} -user-or-group-name admin -application ${val} -fields application,authmethod</arg>
+</arguments>
+<assign>
+<var>${stdout}</var>
+</assign>
+<msg timestamp="20180420 09:13:06.803" level="INFO">Executing command 'login show -vserver initenasnoicc -user-or-group-name admin -application console -fields application,authmethod'.</msg>
+<msg timestamp="20180420 09:13:07.377" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20180420 09:13:07.378" level="INFO">${stdout} =   (security login show)
+vserver       user-or-group-name application authmethod 
+------------- ------------------ ----------- ---------- 
+initenasnoicc admin              console     password   
+</msg>
+<status status="PASS" endtime="20180420 09:13:07.378" starttime="20180420 09:13:06.802"></status>
+</kw>
+<kw name="Get Dict Column Wise" library="Netapplib">
+<doc>This method is used to get dictionary column wise from command output</doc>
+<arguments>
+<arg>${stdout}</arg>
+<arg>col_num=3</arg>
+<arg>start_line=1</arg>
+<arg>end_line=-1</arg>
+</arguments>
+<assign>
+<var>&amp;{actual_dict}</var>
+</assign>
+<msg timestamp="20180420 09:13:07.378" level="INFO">Column wise dictionary created: '{u'authmethod': [u'password']}'</msg>
+<msg timestamp="20180420 09:13:07.379" level="INFO">&amp;{actual_dict} = { authmethod=[u'password'] }</msg>
+<status status="PASS" endtime="20180420 09:13:07.379" starttime="20180420 09:13:07.378"></status>
+</kw>
+<kw name="Get Column Value By Index" library="Netapplib">
+<doc>This method is used to get value from specific column</doc>
+<arguments>
+<arg>${actual_dict}</arg>
+<arg>heading=authmethod</arg>
+<arg>index=0</arg>
+</arguments>
+<assign>
+<var>${actual_value}</var>
+</assign>
+<msg timestamp="20180420 09:13:07.379" level="INFO">${actual_value} = password</msg>
+<status status="PASS" endtime="20180420 09:13:07.379" starttime="20180420 09:13:07.379"></status>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${actual_value}</arg>
+<arg>${admin_auth_method.method}</arg>
+</arguments>
+<msg timestamp="20180420 09:13:07.380" level="INFO">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'str'&gt;</msg>
+<status status="PASS" endtime="20180420 09:13:07.380" starttime="20180420 09:13:07.380"></status>
+</kw>
+<status status="PASS" endtime="20180420 09:13:07.380" starttime="20180420 09:13:06.801"></status>
+</kw>
+<kw type="foritem" name="${APP} = app_ssh">
+<kw name="Get From Dictionary" library="robot.libraries.Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Applications_dict}</arg>
+<arg>${APP}</arg>
+</arguments>
+<assign>
+<var>${val}</var>
+</assign>
+<msg timestamp="20180420 09:13:07.381" level="INFO">${val} = ssh</msg>
+<status status="PASS" endtime="20180420 09:13:07.381" starttime="20180420 09:13:07.381"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes `command` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>login show -vserver ${System.Cluster_name} -user-or-group-name admin -application ${val} -fields application,authmethod</arg>
+</arguments>
+<assign>
+<var>${stdout}</var>
+</assign>
+<msg timestamp="20180420 09:13:07.382" level="INFO">Executing command 'login show -vserver initenasnoicc -user-or-group-name admin -application ssh -fields application,authmethod'.</msg>
+<msg timestamp="20180420 09:13:07.956" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20180420 09:13:07.957" level="INFO">${stdout} =   (security login show)
+vserver       user-or-group-name application authmethod 
+------------- ------------------ ----------- ---------- 
+initenasnoicc admin              ssh         password   
+i...</msg>
+<status status="PASS" endtime="20180420 09:13:07.957" starttime="20180420 09:13:07.381"></status>
+</kw>
+<kw name="Get Dict Column Wise" library="Netapplib">
+<doc>This method is used to get dictionary column wise from command output</doc>
+<arguments>
+<arg>${stdout}</arg>
+<arg>col_num=3</arg>
+<arg>start_line=1</arg>
+<arg>end_line=-1</arg>
+</arguments>
+<assign>
+<var>&amp;{actual_dict}</var>
+</assign>
+<msg timestamp="20180420 09:13:07.957" level="INFO">Column wise dictionary created: '{u'authmethod': [u'password', u'publickey', u'displayed.']}'</msg>
+<msg timestamp="20180420 09:13:07.958" level="INFO">&amp;{actual_dict} = { authmethod=[u'password', u'publickey', u'displayed.'] }</msg>
+<status status="PASS" endtime="20180420 09:13:07.958" starttime="20180420 09:13:07.957"></status>
+</kw>
+<kw name="Get Column Value By Index" library="Netapplib">
+<doc>This method is used to get value from specific column</doc>
+<arguments>
+<arg>${actual_dict}</arg>
+<arg>heading=authmethod</arg>
+<arg>index=0</arg>
+</arguments>
+<assign>
+<var>${actual_value}</var>
+</assign>
+<msg timestamp="20180420 09:13:07.958" level="INFO">${actual_value} = password</msg>
+<status status="PASS" endtime="20180420 09:13:07.958" starttime="20180420 09:13:07.958"></status>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${actual_value}</arg>
+<arg>${admin_auth_method.method}</arg>
+</arguments>
+<msg timestamp="20180420 09:13:07.959" level="INFO">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'str'&gt;</msg>
+<status status="PASS" endtime="20180420 09:13:07.959" starttime="20180420 09:13:07.958"></status>
+</kw>
+<status status="PASS" endtime="20180420 09:13:07.959" starttime="20180420 09:13:07.381"></status>
+</kw>
+<kw type="foritem" name="${APP} = app_http">
+<kw name="Get From Dictionary" library="robot.libraries.Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Applications_dict}</arg>
+<arg>${APP}</arg>
+</arguments>
+<assign>
+<var>${val}</var>
+</assign>
+<msg timestamp="20180420 09:13:07.960" level="INFO">${val} = http</msg>
+<status status="PASS" endtime="20180420 09:13:07.960" starttime="20180420 09:13:07.959"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes `command` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>login show -vserver ${System.Cluster_name} -user-or-group-name admin -application ${val} -fields application,authmethod</arg>
+</arguments>
+<assign>
+<var>${stdout}</var>
+</assign>
+<msg timestamp="20180420 09:13:07.960" level="INFO">Executing command 'login show -vserver initenasnoicc -user-or-group-name admin -application http -fields application,authmethod'.</msg>
+<msg timestamp="20180420 09:13:08.535" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20180420 09:13:08.535" level="INFO">${stdout} =   (security login show)
+vserver       user-or-group-name application authmethod 
+------------- ------------------ ----------- ---------- 
+initenasnoicc admin              http        password   
+</msg>
+<status status="PASS" endtime="20180420 09:13:08.535" starttime="20180420 09:13:07.960"></status>
+</kw>
+<kw name="Get Dict Column Wise" library="Netapplib">
+<doc>This method is used to get dictionary column wise from command output</doc>
+<arguments>
+<arg>${stdout}</arg>
+<arg>col_num=3</arg>
+<arg>start_line=1</arg>
+<arg>end_line=-1</arg>
+</arguments>
+<assign>
+<var>&amp;{actual_dict}</var>
+</assign>
+<msg timestamp="20180420 09:13:08.536" level="INFO">Column wise dictionary created: '{u'authmethod': [u'password']}'</msg>
+<msg timestamp="20180420 09:13:08.536" level="INFO">&amp;{actual_dict} = { authmethod=[u'password'] }</msg>
+<status status="PASS" endtime="20180420 09:13:08.536" starttime="20180420 09:13:08.536"></status>
+</kw>
+<kw name="Get Column Value By Index" library="Netapplib">
+<doc>This method is used to get value from specific column</doc>
+<arguments>
+<arg>${actual_dict}</arg>
+<arg>heading=authmethod</arg>
+<arg>index=0</arg>
+</arguments>
+<assign>
+<var>${actual_value}</var>
+</assign>
+<msg timestamp="20180420 09:13:08.537" level="INFO">${actual_value} = password</msg>
+<status status="PASS" endtime="20180420 09:13:08.537" starttime="20180420 09:13:08.537"></status>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${actual_value}</arg>
+<arg>${admin_auth_method.method}</arg>
+</arguments>
+<msg timestamp="20180420 09:13:08.538" level="INFO">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'str'&gt;</msg>
+<status status="PASS" endtime="20180420 09:13:08.538" starttime="20180420 09:13:08.537"></status>
+</kw>
+<status status="PASS" endtime="20180420 09:13:08.538" starttime="20180420 09:13:07.959"></status>
+</kw>
+<status status="PASS" endtime="20180420 09:13:08.538" starttime="20180420 09:13:05.880"></status>
+</kw>
+<kw type="teardown" name="Close All Connections" library="SSHLibrary">
+<doc>Closes all open connections.</doc>
+<status status="PASS" endtime="20180420 09:13:08.767" starttime="20180420 09:13:08.538"></status>
+</kw>
+<doc>*Title* : Verify Authentication method for applications on cluster with admin account.
+*Objective*: Command to check applications auth method on cluster for admin account.
+*Expected Output*: Return output should contain support applications auth method.
+*Prerequisite* :
+1.) cluster should be up and running.
+2.) node should be configured.</doc>
+<tags>
+<tag>DEMO</tag>
+<tag>Netapp</tag>
+<tag>Security</tag>
+</tags>
+<status status="PASS" endtime="20180420 09:13:08.767" critical="yes" starttime="20180420 09:13:03.121"></status>
+</test>
+<kw type="teardown" name="Close All Connections" library="SSHLibrary">
+<doc>Closes all open connections.</doc>
+<status status="PASS" endtime="20180420 09:13:08.769" starttime="20180420 09:13:08.768"></status>
+</kw>
+<doc>These tests are related to checking Security functionality of Netapp.
+It covers tests related to cluster show, status and nodes.</doc>
+<status status="PASS" endtime="20180420 09:13:08.769" starttime="20180420 09:12:59.984"></status>
+</suite>
+<suite source="/root/netapp_automation/testsuites/TS_NETAPP_STORAGE.robot" id="s1-s4" name="TS NETAPP STORAGE">
+<kw type="setup" name="Run Keywords" library="BuiltIn">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>Open Connection And Login</arg>
+<arg>${System.Cluster_IP}</arg>
+<arg>${System.Username}</arg>
+<arg>${System.Password}</arg>
+<arg>AND</arg>
+<arg>Check Version</arg>
+<arg>${System.Netapp_Release}</arg>
+</arguments>
+<kw name="Open Connection And Log In" library="Netapplib">
+<doc>Open a New SSH Connection to the host machine and login with </doc>
+<arguments>
+<arg>${System.Cluster_IP}</arg>
+<arg>${System.Username}</arg>
+<arg>${System.Password}</arg>
+</arguments>
+<msg timestamp="20180420 09:13:08.860" level="INFO">Logging into '10.195.49.251:22' as 'admin'.</msg>
+<msg timestamp="20180420 09:13:11.622" level="INFO">Read output: initenasnoicc::&gt;</msg>
+<status status="PASS" endtime="20180420 09:13:11.623" starttime="20180420 09:13:08.818"></status>
+</kw>
+<kw name="Check Version" library="Netapplib">
+<doc>Checks the Netapp version if found supported version PASS the test else FAIL the test</doc>
+<arguments>
+<arg>${System.Netapp_Release}</arg>
+</arguments>
+<msg timestamp="20180420 09:13:11.625" level="INFO">Executing command 'version'.</msg>
+<msg timestamp="20180420 09:13:11.954" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20180420 09:13:11.954" level="INFO">Supported version found on Netapp</msg>
+<status status="PASS" endtime="20180420 09:13:11.955" starttime="20180420 09:13:11.624"></status>
+</kw>
+<status status="PASS" endtime="20180420 09:13:11.955" starttime="20180420 09:13:08.818"></status>
+</kw>
+<test id="s1-s4-t1" name="TC_STORAGE_08">
+<kw type="setup" name="Open Connection And Log In" library="Netapplib">
+<doc>Open a New SSH Connection to the host machine and login with </doc>
+<arguments>
+<arg>${System.Cluster_IP}</arg>
+<arg>${System.Username}</arg>
+<arg>${System.Password}</arg>
+</arguments>
+<msg timestamp="20180420 09:13:11.999" level="INFO">Logging into '10.195.49.251:22' as 'admin'.</msg>
+<msg timestamp="20180420 09:13:14.716" level="INFO">Read output: initenasnoicc::&gt;</msg>
+<status status="PASS" endtime="20180420 09:13:14.716" starttime="20180420 09:13:11.956"></status>
+</kw>
+<kw name="Get Dict From Node" library="Netapplib">
+<doc>This method is used to get dictionary from yaml based on node name</doc>
+<arguments>
+<arg>Aggregate</arg>
+</arguments>
+<assign>
+<var>&amp;{Aggr_dict}</var>
+</assign>
+<msg timestamp="20180420 09:13:14.718" level="INFO">&amp;{Aggr_dict} = { aggr4=RP_NL2_02_c1b | aggr1=aggr0_c1a | aggr2=aggr0_c1b | aggr3=RP_NL2_01_c1a }</msg>
+<status status="PASS" endtime="20180420 09:13:14.718" starttime="20180420 09:13:14.717"></status>
+</kw>
+<kw type="for" name="${aggr} IN [ @{Aggr_dict.keys()} ]">
+<kw type="foritem" name="${aggr} = aggr4">
+<kw name="Get Dict From Node" library="Netapplib">
+<doc>This method is used to get dictionary from yaml based on node name</doc>
+<arguments>
+<arg>${aggr}</arg>
+</arguments>
+<assign>
+<var>&amp;{Aggr_val}</var>
+</assign>
+<msg timestamp="20180420 09:13:14.719" level="INFO">&amp;{Aggr_val} = { state=online | number_of_volumes=65 | number_of_disks=9 | raid_type=raid_dp | percent_space_used=50% }</msg>
+<status status="PASS" endtime="20180420 09:13:14.719" starttime="20180420 09:13:14.719"></status>
+</kw>
+<kw name="Get From Dictionary" library="robot.libraries.Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Aggr_dict}</arg>
+<arg>${aggr}</arg>
+</arguments>
+<assign>
+<var>${val}</var>
+</assign>
+<msg timestamp="20180420 09:13:14.720" level="INFO">${val} = RP_NL2_02_c1b</msg>
+<status status="PASS" endtime="20180420 09:13:14.720" starttime="20180420 09:13:14.719"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes `command` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>storage aggregate show -aggregate ${val} -fields percent-used</arg>
+</arguments>
+<assign>
+<var>${stdout}</var>
+</assign>
+<msg timestamp="20180420 09:13:14.720" level="INFO">Executing command 'storage aggregate show -aggregate RP_NL2_02_c1b -fields percent-used'.</msg>
+<msg timestamp="20180420 09:13:15.069" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20180420 09:13:15.070" level="INFO">${stdout} = aggregate     percent-used 
+------------- ------------ 
+RP_NL2_02_c1b 16%          
+</msg>
+<status status="PASS" endtime="20180420 09:13:15.070" starttime="20180420 09:13:14.720"></status>
+</kw>
+<kw name="Get Dict Column Wise" library="Netapplib">
+<doc>This method is used to get dictionary column wise from command output</doc>
+<arguments>
+<arg>${stdout}</arg>
+<arg>col_num=1</arg>
+<arg>start_line=0</arg>
+<arg>end_line=-1</arg>
+</arguments>
+<assign>
+<var>&amp;{actual_dict}</var>
+</assign>
+<msg timestamp="20180420 09:13:15.070" level="INFO">Column wise dictionary created: '{u'percent-used': [u'16%']}'</msg>
+<msg timestamp="20180420 09:13:15.071" level="INFO">&amp;{actual_dict} = { percent-used=[u'16%'] }</msg>
+<status status="PASS" endtime="20180420 09:13:15.071" starttime="20180420 09:13:15.070"></status>
+</kw>
+<kw name="Get Column Value By Index" library="Netapplib">
+<doc>This method is used to get value from specific column</doc>
+<arguments>
+<arg>${actual_dict}</arg>
+<arg>heading=percent-used</arg>
+<arg>index=0</arg>
+</arguments>
+<assign>
+<var>${actual_value}</var>
+</assign>
+<msg timestamp="20180420 09:13:15.071" level="INFO">${actual_value} = 16%</msg>
+<status status="PASS" endtime="20180420 09:13:15.072" starttime="20180420 09:13:15.071"></status>
+</kw>
+<kw name="Get Num" library="Netapplib">
+<doc>This method is used to remove extra special character from number</doc>
+<arguments>
+<arg>${actual_value}</arg>
+</arguments>
+<assign>
+<var>${actual_value}</var>
+</assign>
+<msg timestamp="20180420 09:13:15.072" level="INFO">${actual_value} = 16</msg>
+<status status="PASS" endtime="20180420 09:13:15.072" starttime="20180420 09:13:15.072"></status>
+</kw>
+<kw name="Get Num" library="Netapplib">
+<doc>This method is used to remove extra special character from number</doc>
+<arguments>
+<arg>${Aggr_val.percent_space_used}</arg>
+</arguments>
+<assign>
+<var>${expected_value}</var>
+</assign>
+<msg timestamp="20180420 09:13:15.073" level="INFO">${expected_value} = 50</msg>
+<status status="PASS" endtime="20180420 09:13:15.073" starttime="20180420 09:13:15.072"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>${actual_value} &lt;= ${expected_value}</arg>
+</arguments>
+<status status="PASS" endtime="20180420 09:13:15.074" starttime="20180420 09:13:15.073"></status>
+</kw>
+<status status="PASS" endtime="20180420 09:13:15.074" starttime="20180420 09:13:14.718"></status>
+</kw>
+<kw type="foritem" name="${aggr} = aggr1">
+<kw name="Get Dict From Node" library="Netapplib">
+<doc>This method is used to get dictionary from yaml based on node name</doc>
+<arguments>
+<arg>${aggr}</arg>
+</arguments>
+<assign>
+<var>&amp;{Aggr_val}</var>
+</assign>
+<msg timestamp="20180420 09:13:15.075" level="INFO">&amp;{Aggr_val} = { state=online | number_of_volumes=1 | number_of_disks=9 | raid_type=raid_dp | percent_space_used=95% }</msg>
+<status status="PASS" endtime="20180420 09:13:15.075" starttime="20180420 09:13:15.074"></status>
+</kw>
+<kw name="Get From Dictionary" library="robot.libraries.Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Aggr_dict}</arg>
+<arg>${aggr}</arg>
+</arguments>
+<assign>
+<var>${val}</var>
+</assign>
+<msg timestamp="20180420 09:13:15.075" level="INFO">${val} = aggr0_c1a</msg>
+<status status="PASS" endtime="20180420 09:13:15.076" starttime="20180420 09:13:15.075"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes `command` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>storage aggregate show -aggregate ${val} -fields percent-used</arg>
+</arguments>
+<assign>
+<var>${stdout}</var>
+</assign>
+<msg timestamp="20180420 09:13:15.076" level="INFO">Executing command 'storage aggregate show -aggregate aggr0_c1a -fields percent-used'.</msg>
+<msg timestamp="20180420 09:13:15.661" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20180420 09:13:15.661" level="INFO">${stdout} = aggregate percent-used 
+--------- ------------ 
+aggr0_c1a 95%          
+</msg>
+<status status="PASS" endtime="20180420 09:13:15.661" starttime="20180420 09:13:15.076"></status>
+</kw>
+<kw name="Get Dict Column Wise" library="Netapplib">
+<doc>This method is used to get dictionary column wise from command output</doc>
+<arguments>
+<arg>${stdout}</arg>
+<arg>col_num=1</arg>
+<arg>start_line=0</arg>
+<arg>end_line=-1</arg>
+</arguments>
+<assign>
+<var>&amp;{actual_dict}</var>
+</assign>
+<msg timestamp="20180420 09:13:15.662" level="INFO">Column wise dictionary created: '{u'percent-used': [u'95%']}'</msg>
+<msg timestamp="20180420 09:13:15.663" level="INFO">&amp;{actual_dict} = { percent-used=[u'95%'] }</msg>
+<status status="PASS" endtime="20180420 09:13:15.663" starttime="20180420 09:13:15.662"></status>
+</kw>
+<kw name="Get Column Value By Index" library="Netapplib">
+<doc>This method is used to get value from specific column</doc>
+<arguments>
+<arg>${actual_dict}</arg>
+<arg>heading=percent-used</arg>
+<arg>index=0</arg>
+</arguments>
+<assign>
+<var>${actual_value}</var>
+</assign>
+<msg timestamp="20180420 09:13:15.663" level="INFO">${actual_value} = 95%</msg>
+<status status="PASS" endtime="20180420 09:13:15.663" starttime="20180420 09:13:15.663"></status>
+</kw>
+<kw name="Get Num" library="Netapplib">
+<doc>This method is used to remove extra special character from number</doc>
+<arguments>
+<arg>${actual_value}</arg>
+</arguments>
+<assign>
+<var>${actual_value}</var>
+</assign>
+<msg timestamp="20180420 09:13:15.664" level="INFO">${actual_value} = 95</msg>
+<status status="PASS" endtime="20180420 09:13:15.664" starttime="20180420 09:13:15.663"></status>
+</kw>
+<kw name="Get Num" library="Netapplib">
+<doc>This method is used to remove extra special character from number</doc>
+<arguments>
+<arg>${Aggr_val.percent_space_used}</arg>
+</arguments>
+<assign>
+<var>${expected_value}</var>
+</assign>
+<msg timestamp="20180420 09:13:15.664" level="INFO">${expected_value} = 95</msg>
+<status status="PASS" endtime="20180420 09:13:15.665" starttime="20180420 09:13:15.664"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>${actual_value} &lt;= ${expected_value}</arg>
+</arguments>
+<status status="PASS" endtime="20180420 09:13:15.666" starttime="20180420 09:13:15.665"></status>
+</kw>
+<status status="PASS" endtime="20180420 09:13:15.666" starttime="20180420 09:13:15.074"></status>
+</kw>
+<kw type="foritem" name="${aggr} = aggr2">
+<kw name="Get Dict From Node" library="Netapplib">
+<doc>This method is used to get dictionary from yaml based on node name</doc>
+<arguments>
+<arg>${aggr}</arg>
+</arguments>
+<assign>
+<var>&amp;{Aggr_val}</var>
+</assign>
+<msg timestamp="20180420 09:13:15.666" level="INFO">&amp;{Aggr_val} = { state=online | number_of_volumes=1 | number_of_disks=9 | raid_type=raid_dp | percent_space_used=95% }</msg>
+<status status="PASS" endtime="20180420 09:13:15.666" starttime="20180420 09:13:15.666"></status>
+</kw>
+<kw name="Get From Dictionary" library="robot.libraries.Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Aggr_dict}</arg>
+<arg>${aggr}</arg>
+</arguments>
+<assign>
+<var>${val}</var>
+</assign>
+<msg timestamp="20180420 09:13:15.667" level="INFO">${val} = aggr0_c1b</msg>
+<status status="PASS" endtime="20180420 09:13:15.667" starttime="20180420 09:13:15.667"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes `command` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>storage aggregate show -aggregate ${val} -fields percent-used</arg>
+</arguments>
+<assign>
+<var>${stdout}</var>
+</assign>
+<msg timestamp="20180420 09:13:15.667" level="INFO">Executing command 'storage aggregate show -aggregate aggr0_c1b -fields percent-used'.</msg>
+<msg timestamp="20180420 09:13:16.264" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20180420 09:13:16.264" level="INFO">${stdout} = aggregate percent-used 
+--------- ------------ 
+aggr0_c1b 95%          
+</msg>
+<status status="PASS" endtime="20180420 09:13:16.264" starttime="20180420 09:13:15.667"></status>
+</kw>
+<kw name="Get Dict Column Wise" library="Netapplib">
+<doc>This method is used to get dictionary column wise from command output</doc>
+<arguments>
+<arg>${stdout}</arg>
+<arg>col_num=1</arg>
+<arg>start_line=0</arg>
+<arg>end_line=-1</arg>
+</arguments>
+<assign>
+<var>&amp;{actual_dict}</var>
+</assign>
+<msg timestamp="20180420 09:13:16.265" level="INFO">Column wise dictionary created: '{u'percent-used': [u'95%']}'</msg>
+<msg timestamp="20180420 09:13:16.265" level="INFO">&amp;{actual_dict} = { percent-used=[u'95%'] }</msg>
+<status status="PASS" endtime="20180420 09:13:16.265" starttime="20180420 09:13:16.265"></status>
+</kw>
+<kw name="Get Column Value By Index" library="Netapplib">
+<doc>This method is used to get value from specific column</doc>
+<arguments>
+<arg>${actual_dict}</arg>
+<arg>heading=percent-used</arg>
+<arg>index=0</arg>
+</arguments>
+<assign>
+<var>${actual_value}</var>
+</assign>
+<msg timestamp="20180420 09:13:16.266" level="INFO">${actual_value} = 95%</msg>
+<status status="PASS" endtime="20180420 09:13:16.266" starttime="20180420 09:13:16.266"></status>
+</kw>
+<kw name="Get Num" library="Netapplib">
+<doc>This method is used to remove extra special character from number</doc>
+<arguments>
+<arg>${actual_value}</arg>
+</arguments>
+<assign>
+<var>${actual_value}</var>
+</assign>
+<msg timestamp="20180420 09:13:16.267" level="INFO">${actual_value} = 95</msg>
+<status status="PASS" endtime="20180420 09:13:16.267" starttime="20180420 09:13:16.266"></status>
+</kw>
+<kw name="Get Num" library="Netapplib">
+<doc>This method is used to remove extra special character from number</doc>
+<arguments>
+<arg>${Aggr_val.percent_space_used}</arg>
+</arguments>
+<assign>
+<var>${expected_value}</var>
+</assign>
+<msg timestamp="20180420 09:13:16.267" level="INFO">${expected_value} = 95</msg>
+<status status="PASS" endtime="20180420 09:13:16.267" starttime="20180420 09:13:16.267"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>${actual_value} &lt;= ${expected_value}</arg>
+</arguments>
+<status status="PASS" endtime="20180420 09:13:16.269" starttime="20180420 09:13:16.267"></status>
+</kw>
+<status status="PASS" endtime="20180420 09:13:16.269" starttime="20180420 09:13:15.666"></status>
+</kw>
+<kw type="foritem" name="${aggr} = aggr3">
+<kw name="Get Dict From Node" library="Netapplib">
+<doc>This method is used to get dictionary from yaml based on node name</doc>
+<arguments>
+<arg>${aggr}</arg>
+</arguments>
+<assign>
+<var>&amp;{Aggr_val}</var>
+</assign>
+<msg timestamp="20180420 09:13:16.270" level="INFO">&amp;{Aggr_val} = { state=online | number_of_volumes=112 | number_of_disks=9 | raid_type=raid_dp | percent_space_used=50% }</msg>
+<status status="PASS" endtime="20180420 09:13:16.270" starttime="20180420 09:13:16.269"></status>
+</kw>
+<kw name="Get From Dictionary" library="robot.libraries.Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Aggr_dict}</arg>
+<arg>${aggr}</arg>
+</arguments>
+<assign>
+<var>${val}</var>
+</assign>
+<msg timestamp="20180420 09:13:16.270" level="INFO">${val} = RP_NL2_01_c1a</msg>
+<status status="PASS" endtime="20180420 09:13:16.270" starttime="20180420 09:13:16.270"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes `command` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>storage aggregate show -aggregate ${val} -fields percent-used</arg>
+</arguments>
+<assign>
+<var>${stdout}</var>
+</assign>
+<msg timestamp="20180420 09:13:16.271" level="INFO">Executing command 'storage aggregate show -aggregate RP_NL2_01_c1a -fields percent-used'.</msg>
+<msg timestamp="20180420 09:13:16.867" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20180420 09:13:16.867" level="INFO">${stdout} = aggregate     percent-used 
+------------- ------------ 
+RP_NL2_01_c1a 14%          
+</msg>
+<status status="PASS" endtime="20180420 09:13:16.867" starttime="20180420 09:13:16.271"></status>
+</kw>
+<kw name="Get Dict Column Wise" library="Netapplib">
+<doc>This method is used to get dictionary column wise from command output</doc>
+<arguments>
+<arg>${stdout}</arg>
+<arg>col_num=1</arg>
+<arg>start_line=0</arg>
+<arg>end_line=-1</arg>
+</arguments>
+<assign>
+<var>&amp;{actual_dict}</var>
+</assign>
+<msg timestamp="20180420 09:13:16.868" level="INFO">Column wise dictionary created: '{u'percent-used': [u'14%']}'</msg>
+<msg timestamp="20180420 09:13:16.869" level="INFO">&amp;{actual_dict} = { percent-used=[u'14%'] }</msg>
+<status status="PASS" endtime="20180420 09:13:16.869" starttime="20180420 09:13:16.867"></status>
+</kw>
+<kw name="Get Column Value By Index" library="Netapplib">
+<doc>This method is used to get value from specific column</doc>
+<arguments>
+<arg>${actual_dict}</arg>
+<arg>heading=percent-used</arg>
+<arg>index=0</arg>
+</arguments>
+<assign>
+<var>${actual_value}</var>
+</assign>
+<msg timestamp="20180420 09:13:16.870" level="INFO">${actual_value} = 14%</msg>
+<status status="PASS" endtime="20180420 09:13:16.870" starttime="20180420 09:13:16.869"></status>
+</kw>
+<kw name="Get Num" library="Netapplib">
+<doc>This method is used to remove extra special character from number</doc>
+<arguments>
+<arg>${actual_value}</arg>
+</arguments>
+<assign>
+<var>${actual_value}</var>
+</assign>
+<msg timestamp="20180420 09:13:16.870" level="INFO">${actual_value} = 14</msg>
+<status status="PASS" endtime="20180420 09:13:16.870" starttime="20180420 09:13:16.870"></status>
+</kw>
+<kw name="Get Num" library="Netapplib">
+<doc>This method is used to remove extra special character from number</doc>
+<arguments>
+<arg>${Aggr_val.percent_space_used}</arg>
+</arguments>
+<assign>
+<var>${expected_value}</var>
+</assign>
+<msg timestamp="20180420 09:13:16.871" level="INFO">${expected_value} = 50</msg>
+<status status="PASS" endtime="20180420 09:13:16.871" starttime="20180420 09:13:16.870"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>${actual_value} &lt;= ${expected_value}</arg>
+</arguments>
+<status status="PASS" endtime="20180420 09:13:16.871" starttime="20180420 09:13:16.871"></status>
+</kw>
+<status status="PASS" endtime="20180420 09:13:16.872" starttime="20180420 09:13:16.269"></status>
+</kw>
+<status status="PASS" endtime="20180420 09:13:16.872" starttime="20180420 09:13:14.718"></status>
+</kw>
+<kw type="teardown" name="Close All Connections" library="SSHLibrary">
+<doc>Closes all open connections.</doc>
+<status status="PASS" endtime="20180420 09:13:17.100" starttime="20180420 09:13:16.872"></status>
+</kw>
+<doc>*Title* : Verify the percent used space for aggregates
+*Objective*: Command to check percentage used space for aggregates
+*Expected Output*: Return output should contain percent-used space as expected.
+*Prerequisite* :
+1.) cluster should be up and running.
+2.) node should be configured.</doc>
+<tags>
+<tag>DEMO</tag>
+<tag>Netapp</tag>
+<tag>Storage</tag>
+</tags>
+<status status="PASS" endtime="20180420 09:13:17.100" critical="yes" starttime="20180420 09:13:11.955"></status>
+</test>
+<kw type="teardown" name="Close All Connections" library="SSHLibrary">
+<doc>Closes all open connections.</doc>
+<status status="PASS" endtime="20180420 09:13:17.102" starttime="20180420 09:13:17.102"></status>
+</kw>
+<doc>These tests are related to checking Access functionality of Netapp.
+It covers tests related to cluster show, status and nodes.</doc>
+<status status="PASS" endtime="20180420 09:13:17.102" starttime="20180420 09:13:08.770"></status>
+</suite>
+<status status="PASS" endtime="20180420 09:13:17.104" starttime="20180420 09:12:39.226"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="0" pass="4">Critical Tests</stat>
+<stat fail="0" pass="4">All Tests</stat>
+</total>
+<tag>
+<stat fail="0" pass="1">Access</stat>
+<stat fail="0" pass="4">DEMO</stat>
+<stat fail="0" pass="1">Interconnection</stat>
+<stat fail="0" pass="4">Netapp</stat>
+<stat fail="0" pass="1">Security</stat>
+<stat fail="0" pass="1">Storage</stat>
+</tag>
+<suite>
+<stat fail="0" id="s1" name="TS NETAPP ACCESS &amp; TS NETAPP CXN &amp; TS NETAPP SECURITY &amp; TS NETAPP STORAGE" pass="4">TS NETAPP ACCESS &amp; TS NETAPP CXN &amp; TS NETAPP SECURITY &amp; TS NETAPP STORAGE</stat>
+<stat fail="0" id="s1-s1" name="TS NETAPP ACCESS" pass="1">TS NETAPP ACCESS &amp; TS NETAPP CXN &amp; TS NETAPP SECURITY &amp; TS NETAPP STORAGE.TS NETAPP ACCESS</stat>
+<stat fail="0" id="s1-s2" name="TS NETAPP CXN" pass="1">TS NETAPP ACCESS &amp; TS NETAPP CXN &amp; TS NETAPP SECURITY &amp; TS NETAPP STORAGE.TS NETAPP CXN</stat>
+<stat fail="0" id="s1-s3" name="TS NETAPP SECURITY" pass="1">TS NETAPP ACCESS &amp; TS NETAPP CXN &amp; TS NETAPP SECURITY &amp; TS NETAPP STORAGE.TS NETAPP SECURITY</stat>
+<stat fail="0" id="s1-s4" name="TS NETAPP STORAGE" pass="1">TS NETAPP ACCESS &amp; TS NETAPP CXN &amp; TS NETAPP SECURITY &amp; TS NETAPP STORAGE.TS NETAPP STORAGE</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
