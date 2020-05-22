@@ -4,10 +4,10 @@ Netapp Test Automation
 
 This Framework contains automated test cases written in robotframework supported by custom python libraries.
 
-These Tests can be performed on newly deployed Netapp cluster to check if the cluster is deployed as per requirements/expectation.
+These tests can be performed on newly deployed Netapp cluster to check if the cluster is deployed as per requirements/expectation.
 
-current Testcases are based on netapp cli and supported with NetApp Release 8.3.2
-It can support further releases as well, based on cli changes verifications need to be modified.
+Current testcases are based on netapp cli and supported with NetApp Release 8.3.2,
+It can support further releases as well, based on cli changes the test verifications need to be modified.
 
 Technologies
 ============
@@ -72,10 +72,13 @@ go to netapp_automation directory
     **example: robot -t TC_ACCESS_01 -P . -d artifacts testsuites\TS_NETAPP_ACCESS.robot**
   
 NOTE: go to Netapp_test_automation dir and execute above cmds.
-      `-i option is for include tag`
-      `-t option is for testcase`
-      `-p option is to add robot current path to pythonpath.`
-      `-d option is to provide results dir`
+      
+      ```
+      -i option is for include tag
+      -t option is for testcase
+      -p option is to add robot current path to pythonpath.
+      -d option is to provide results dir
+      ```
       
   
 Conclusion
