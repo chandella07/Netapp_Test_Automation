@@ -45,12 +45,17 @@ Pre-requisite
 
 > Before executing test cases please fill the parameter details in config.yaml file.
 
-> Below python packages are required:
+> Install the required framework libraries, defined in requirement.txt using below command.
+
+  `pip install requirements.txt`
+
+> Below python packages are used in this framework:
 ```
 robotframework
 SSHlibrary
 Process
 pyyaml
+sphinx
 ```
 
 
