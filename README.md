@@ -47,7 +47,7 @@ Pre-requisite
 
 > Install the required framework libraries, defined in requirement.txt using below command.
 
-  `pip install requirements.txt`
+  `pip install -r requirements.txt`
 
 > Below python packages are used in this framework:
 ```
