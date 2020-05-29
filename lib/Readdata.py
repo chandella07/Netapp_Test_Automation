@@ -17,7 +17,7 @@ class Readdata(object):
             try:
                 self.var = yaml.load(stream)
             except yaml.YAMLError as exc:
-                print exc    
+                print(exc)    
 
 
     def get_dict_from_node(self,node):

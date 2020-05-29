@@ -1,18 +1,18 @@
 from robot.libraries.BuiltIn import BuiltIn
 from collections import OrderedDict
-from Keywords import Keywords
+from lib.Keywords import Keywords
 import re,datetime
 
 class Netapplib(Keywords):
     '''
-    Netapplib: core library for netapp testing.
-    Usage: 
-           Advance parsers and verification methods for Netapp automation.
-           It provides parsers to parse output row wise or column wise.
-           Also provide generic verfication methods.
+        Netapplib: core library for netapp testing.
+        Usage:
+        Advance parsers and verification methods for Netapp automation.
+        It provides parsers to parse output row wise or column wise.
+        Also provide generic verfication methods.
     '''
     
-    sshlib = BuiltIn().get_library_instance('SSHLibrary')
+    #sshlib = BuiltIn().get_library_instance('SSHLibrary')
 
     
     def get_dict_column_wise(self, output, col_num=0, start_line=0, end_line=-2):
@@ -22,7 +22,8 @@ class Netapplib(Keywords):
             col_num: column number to be fatched
             start_line: line number to start parsing table
             end_line: line number to stop parsing table
-            output params::- dictionary with single key and list of values'''
+            output params::- dictionary with single key and list of values
+        '''
 
         lines = output.splitlines()
         list1= []

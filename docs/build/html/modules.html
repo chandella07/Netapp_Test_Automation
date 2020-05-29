@@ -1,0 +1,421 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Customlib library &#8212; Netapp_Test_Automation v1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Netapp Test Automation" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="toctree-wrapper compound">
+</div>
+<div class="section" id="module-lib.Customlib">
+<span id="customlib-library"></span><h1>Customlib library<a class="headerlink" href="#module-lib.Customlib" title="Permalink to this headline">¶</a></h1>
+<dl class="py exception">
+<dt id="lib.Customlib.CustomFatalError">
+<em class="property">exception </em><code class="sig-prename descclassname">lib.Customlib.</code><code class="sig-name descname">CustomFatalError</code><a class="reference internal" href="_modules/lib/Customlib.html#CustomFatalError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Customlib.CustomFatalError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raises FATAL Error</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="lib.Customlib.Customlib">
+<em class="property">class </em><code class="sig-prename descclassname">lib.Customlib.</code><code class="sig-name descname">Customlib</code><a class="reference internal" href="_modules/lib/Customlib.html#Customlib"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Customlib.Customlib" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom class to create Setup and Teradown methods</p>
+<dl class="py method">
+<dt id="lib.Customlib.Customlib.Check_Version">
+<code class="sig-name descname">Check_Version</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">version</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Customlib.html#Customlib.Check_Version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Customlib.Customlib.Check_Version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks the Netapp version if found supported version PASS the test else FAIL the test</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Customlib.Customlib.Open_Connection_And_Log_In">
+<code class="sig-name descname">Open_Connection_And_Log_In</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">host</span></em>, <em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Customlib.html#Customlib.Open_Connection_And_Log_In"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Customlib.Customlib.Open_Connection_And_Log_In" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a New SSH Connection to the host machine and login with 
+provided username and password</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Customlib.Customlib.set_diag_mode">
+<code class="sig-name descname">set_diag_mode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Customlib.html#Customlib.set_diag_mode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Customlib.Customlib.set_diag_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will set the diag mode on Netapp</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Customlib.Customlib.set_terminal">
+<code class="sig-name descname">set_terminal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cmd</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Customlib.html#Customlib.set_terminal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Customlib.Customlib.set_terminal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the terminal output</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lib.Keywords">
+<span id="keywords-library"></span><h1>Keywords library<a class="headerlink" href="#module-lib.Keywords" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="lib.Keywords.Keywords">
+<em class="property">class </em><code class="sig-prename descclassname">lib.Keywords.</code><code class="sig-name descname">Keywords</code><a class="reference internal" href="_modules/lib/Keywords.html#Keywords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keyword class to implement various test keywords defined in robot test suites</p>
+<dl class="py method">
+<dt id="lib.Keywords.Keywords.verify_cifs_configuration">
+<code class="sig-name descname">verify_cifs_configuration</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">svm</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Keywords.html#Keywords.verify_cifs_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords.verify_cifs_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to verify svm’s CIFS configuration</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Keywords.Keywords.verify_cluster_configuration">
+<code class="sig-name descname">verify_cluster_configuration</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dict1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Keywords.html#Keywords.verify_cluster_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords.verify_cluster_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used for verifying configuartion of the cluster
+It checks the configuration based on no. of nodes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Keywords.Keywords.verify_hwassist_show">
+<code class="sig-name descname">verify_hwassist_show</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">output</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Keywords.html#Keywords.verify_hwassist_show"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords.verify_hwassist_show" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to verify the hwassist show output
+in order to check the partner nodes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Keywords.Keywords.verify_hwassist_test">
+<code class="sig-name descname">verify_hwassist_test</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">node</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Keywords.html#Keywords.verify_hwassist_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords.verify_hwassist_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to verify the hwassist on each node</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Keywords.Keywords.verify_interface_ip">
+<code class="sig-name descname">verify_interface_ip</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">node</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Keywords.html#Keywords.verify_interface_ip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords.verify_interface_ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to verify network interface IP’s of nodes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Keywords.Keywords.verify_iscsi_configuration">
+<code class="sig-name descname">verify_iscsi_configuration</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">svm</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Keywords.html#Keywords.verify_iscsi_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords.verify_iscsi_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to verify svm’s ISCSI configuration</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Keywords.Keywords.verify_ndmp_configuration">
+<code class="sig-name descname">verify_ndmp_configuration</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">svm</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Keywords.html#Keywords.verify_ndmp_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords.verify_ndmp_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to verify svm’s ndmp configuration</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Keywords.Keywords.verify_network_interface">
+<code class="sig-name descname">verify_network_interface</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">node</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Keywords.html#Keywords.verify_network_interface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords.verify_network_interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to verify network interface of nodes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Keywords.Keywords.verify_network_interface_properties">
+<code class="sig-name descname">verify_network_interface_properties</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">node</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Keywords.html#Keywords.verify_network_interface_properties"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords.verify_network_interface_properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to verify network interface properties of nodes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Keywords.Keywords.verify_network_vlan">
+<code class="sig-name descname">verify_network_vlan</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">node</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Keywords.html#Keywords.verify_network_vlan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords.verify_network_vlan" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to verify network VLAN of nodes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Keywords.Keywords.verify_nfs_configuration">
+<code class="sig-name descname">verify_nfs_configuration</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">svm</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Keywords.html#Keywords.verify_nfs_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords.verify_nfs_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to verify svm’s NFS configuration</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Keywords.Keywords.verify_protocols">
+<code class="sig-name descname">verify_protocols</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">svm</span></em>, <em class="sig-param"><span class="n">val</span></em>, <em class="sig-param"><span class="n">flag</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Keywords.html#Keywords.verify_protocols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords.verify_protocols" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to verify protocols on svm</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Keywords.Keywords.verify_svm_export_policy">
+<code class="sig-name descname">verify_svm_export_policy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">svm</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Keywords.html#Keywords.verify_svm_export_policy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords.verify_svm_export_policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to verify svm’s export policy names</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Keywords.Keywords.verify_svm_lif">
+<code class="sig-name descname">verify_svm_lif</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">svm</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Keywords.html#Keywords.verify_svm_lif"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords.verify_svm_lif" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to verify svm’s lif</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Keywords.Keywords.verify_svm_peering">
+<code class="sig-name descname">verify_svm_peering</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">svm</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Keywords.html#Keywords.verify_svm_peering"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords.verify_svm_peering" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to verify svm peering</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Keywords.Keywords.verify_svm_routing_groups">
+<code class="sig-name descname">verify_svm_routing_groups</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">svm</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Keywords.html#Keywords.verify_svm_routing_groups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords.verify_svm_routing_groups" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to verify svm’s routing groups</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Keywords.Keywords.verify_svm_volumes">
+<code class="sig-name descname">verify_svm_volumes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">svm</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Keywords.html#Keywords.verify_svm_volumes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords.verify_svm_volumes" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to verify svm’s volumes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Keywords.Keywords.verify_svm_volumes_details">
+<code class="sig-name descname">verify_svm_volumes_details</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">svm</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Keywords.html#Keywords.verify_svm_volumes_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords.verify_svm_volumes_details" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to verify svm’s volumes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Keywords.Keywords.verify_takeover_option">
+<code class="sig-name descname">verify_takeover_option</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">node</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Keywords.html#Keywords.verify_takeover_option"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Keywords.Keywords.verify_takeover_option" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to verify failover node details</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lib.Netapplib">
+<span id="netapplib-library"></span><h1>Netapplib library<a class="headerlink" href="#module-lib.Netapplib" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="lib.Netapplib.Netapplib">
+<em class="property">class </em><code class="sig-prename descclassname">lib.Netapplib.</code><code class="sig-name descname">Netapplib</code><a class="reference internal" href="_modules/lib/Netapplib.html#Netapplib"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Netapplib.Netapplib" title="Permalink to this definition">¶</a></dt>
+<dd><p>Netapplib: core library for netapp testing.
+Usage:
+Advance parsers and verification methods for Netapp automation.
+It provides parsers to parse output row wise or column wise.
+Also provide generic verfication methods.</p>
+<dl class="py method">
+<dt id="lib.Netapplib.Netapplib.check_multiple_should_contains">
+<code class="sig-name descname">check_multiple_should_contains</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">output</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Netapplib.html#Netapplib.check_multiple_should_contains"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Netapplib.Netapplib.check_multiple_should_contains" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is use to check multiple should contain statement
+if the output passed to this method contains one or more arg strings 
+then it will return True else return false</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Netapplib.Netapplib.compare_dict_column_wise">
+<code class="sig-name descname">compare_dict_column_wise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">expected_dict</span></em>, <em class="sig-param"><span class="n">actual_dict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Netapplib.html#Netapplib.compare_dict_column_wise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Netapplib.Netapplib.compare_dict_column_wise" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to compare the expected dictionary with actual dictionary
+It will compare the dictionaries as columns
+Where dictionary key is heading and dictionary values are data
+if keys and values of expected dictionary is found in actual dictionary
+than it will return True else return False</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Netapplib.Netapplib.compare_dict_row_wise">
+<code class="sig-name descname">compare_dict_row_wise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">expected_dict</span></em>, <em class="sig-param"><span class="n">actual_list_dict</span></em>, <em class="sig-param"><span class="n">row_num</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Netapplib.html#Netapplib.compare_dict_row_wise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Netapplib.Netapplib.compare_dict_row_wise" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to compare the expected dictionaries with actual dictionary
+If row_num param is passed it will compare specific row otherwise it will compare all the rows
+If keys and values of expected dictionary is matched to keys and values of actual dictionary
+Then it will return status True else return status false</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Netapplib.Netapplib.compare_time">
+<code class="sig-name descname">compare_time</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">time1</span></em>, <em class="sig-param"><span class="n">time2</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Netapplib.html#Netapplib.compare_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Netapplib.Netapplib.compare_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to compare two times and finds diff in minutes
+returns True if diff is less than 5 mins else return False</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Netapplib.Netapplib.create_flat_list">
+<code class="sig-name descname">create_flat_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">list1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Netapplib.html#Netapplib.create_flat_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Netapplib.Netapplib.create_flat_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to create a flat single list from a list of lists</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Netapplib.Netapplib.get_column_value_by_index">
+<code class="sig-name descname">get_column_value_by_index</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dict1</span></em>, <em class="sig-param"><span class="n">heading</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">index</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Netapplib.html#Netapplib.get_column_value_by_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Netapplib.Netapplib.get_column_value_by_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to get value from specific column</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Netapplib.Netapplib.get_date_from_timestamp">
+<code class="sig-name descname">get_date_from_timestamp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">output</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Netapplib.html#Netapplib.get_date_from_timestamp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Netapplib.Netapplib.get_date_from_timestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to get date from command output</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Netapplib.Netapplib.get_dict_column_wise">
+<code class="sig-name descname">get_dict_column_wise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">output</span></em>, <em class="sig-param"><span class="n">col_num</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">start_line</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">end_line</span><span class="o">=</span><span class="default_value">- 2</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Netapplib.html#Netapplib.get_dict_column_wise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Netapplib.Netapplib.get_dict_column_wise" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to get dictionary column wise from command output
+input params::-
+output: output of the command
+col_num: column number to be fatched
+start_line: line number to start parsing table
+end_line: line number to stop parsing table
+output params::- dictionary with single key and list of values</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Netapplib.Netapplib.get_dict_row_wise">
+<code class="sig-name descname">get_dict_row_wise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">output</span></em>, <em class="sig-param"><span class="n">start_line</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">end_line</span><span class="o">=</span><span class="default_value">- 2</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Netapplib.html#Netapplib.get_dict_row_wise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Netapplib.Netapplib.get_dict_row_wise" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to get list of dictionaries row wise from command output
+input params::-
+output: output of the command
+start_line: line number to start parsing table
+end_line: line number to stop parsing table
+output params::- list with elements as dictionaries</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Netapplib.Netapplib.get_num">
+<code class="sig-name descname">get_num</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Netapplib.html#Netapplib.get_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Netapplib.Netapplib.get_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to remove extra special character from number
+e.g  input : 25GB  and  output : 25</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Netapplib.Netapplib.get_row_index">
+<code class="sig-name descname">get_row_index</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">list_of_dict</span></em>, <em class="sig-param"><span class="n">key</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Netapplib.html#Netapplib.get_row_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Netapplib.Netapplib.get_row_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to get row index in which expected dictionary key:value is found</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Netapplib.Netapplib.get_time_from_timestamp">
+<code class="sig-name descname">get_time_from_timestamp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">output</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Netapplib.html#Netapplib.get_time_from_timestamp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Netapplib.Netapplib.get_time_from_timestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to get time from command output</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Netapplib.Netapplib.match_dict">
+<code class="sig-name descname">match_dict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dict1</span></em>, <em class="sig-param"><span class="n">dict2</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Netapplib.html#Netapplib.match_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Netapplib.Netapplib.match_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will matched two dictionaries
+If dictionary keys and values matched return True else return False</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Netapplib.Netapplib.match_list">
+<code class="sig-name descname">match_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">val</span></em>, <em class="sig-param"><span class="n">list1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Netapplib.html#Netapplib.match_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Netapplib.Netapplib.match_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to check if expected element matches every element of list</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lib.Readdata">
+<span id="readdata-library"></span><h1>Readdata library<a class="headerlink" href="#module-lib.Readdata" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="lib.Readdata.Readdata">
+<em class="property">class </em><code class="sig-prename descclassname">lib.Readdata.</code><code class="sig-name descname">Readdata</code><a class="reference internal" href="_modules/lib/Readdata.html#Readdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Readdata.Readdata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Readdata class is used to extend keywords suppport for reading config data 
+also, to fetch specific data format to get data.</p>
+<dl class="py method">
+<dt id="lib.Readdata.Readdata.get_dict_from_node">
+<code class="sig-name descname">get_dict_from_node</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">node</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Readdata.html#Readdata.get_dict_from_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Readdata.Readdata.get_dict_from_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to get dictionary from yaml based on node name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Readdata.Readdata.get_keys_from_node">
+<code class="sig-name descname">get_keys_from_node</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">node</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Readdata.html#Readdata.get_keys_from_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Readdata.Readdata.get_keys_from_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to get keys from yaml based on node name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.Readdata.Readdata.get_values_from_node">
+<code class="sig-name descname">get_values_from_node</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">node</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/Readdata.html#Readdata.get_values_from_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.Readdata.Readdata.get_values_from_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to get values from yaml based on node name</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Netapp_Test_Automation</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Customlib library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#module-lib.Keywords">Keywords library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#module-lib.Netapplib">Netapplib library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#module-lib.Readdata">Readdata library</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Netapp Test Automation</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Deepak Chandella.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/modules.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

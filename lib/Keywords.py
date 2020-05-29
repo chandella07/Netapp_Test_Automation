@@ -1,13 +1,13 @@
 from robot.libraries.BuiltIn import BuiltIn
 from collections import OrderedDict
-from Readdata import Readdata
-from Customlib import Customlib
+from lib.Readdata import Readdata
+from lib.Customlib import Customlib
 import re,sys
 
 class Keywords(Readdata,Customlib):
     ''' Keyword class to implement various test keywords defined in robot test suites '''
  
-    sshlib = BuiltIn().get_library_instance('SSHLibrary')
+    #sshlib = BuiltIn().get_library_instance('SSHLibrary')
 
     
     def verify_network_interface(self,node,val):
@@ -172,8 +172,8 @@ class Keywords(Readdata,Customlib):
 
     def verify_svm_volumes_details(self,svm,val):
         '''This method is used to verify svm's volumes'''
-	
-	volumes_name = svm+"_volumes"
+    
+        volumes_name = svm+"_volumes"
         volumes_dict = Readdata().get_dict_from_node(volumes_name)
         self.sshlib._log("Volumes dict is : %s" % volumes_dict)
         for vol_key,vol_val in volumes_dict.items():

@@ -1,0 +1,421 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>lib.Keywords &#8212; Netapp_Test_Automation v1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for lib.Keywords</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">robot.libraries.BuiltIn</span> <span class="kn">import</span> <span class="n">BuiltIn</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">lib.Readdata</span> <span class="kn">import</span> <span class="n">Readdata</span>
+<span class="kn">from</span> <span class="nn">lib.Customlib</span> <span class="kn">import</span> <span class="n">Customlib</span>
+<span class="kn">import</span> <span class="nn">re</span><span class="o">,</span><span class="nn">sys</span>
+
+<div class="viewcode-block" id="Keywords"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords">[docs]</a><span class="k">class</span> <span class="nc">Keywords</span><span class="p">(</span><span class="n">Readdata</span><span class="p">,</span><span class="n">Customlib</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Keyword class to implement various test keywords defined in robot test suites &#39;&#39;&#39;</span>
+ 
+    <span class="c1">#sshlib = BuiltIn().get_library_instance(&#39;SSHLibrary&#39;)</span>
+
+    
+<div class="viewcode-block" id="Keywords.verify_network_interface"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords.verify_network_interface">[docs]</a>    <span class="k">def</span> <span class="nf">verify_network_interface</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">node</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to verify network interface of nodes&#39;&#39;&#39;</span>
+
+        <span class="n">interface_name</span> <span class="o">=</span> <span class="n">node</span><span class="o">+</span><span class="s2">&quot;_interface&quot;</span>
+        <span class="n">interface_list</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_keys_from_node</span><span class="p">(</span><span class="n">interface_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Interface list is : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">interface_list</span><span class="p">)</span>
+        
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;network port show -node &quot;</span><span class="o">+</span><span class="n">val</span><span class="o">+</span><span class="s2">&quot; -fields port&quot;</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">interface</span> <span class="ow">in</span> <span class="n">interface_list</span><span class="p">:</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">interface</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Found interface : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">interface</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Keywords.verify_network_interface_properties"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords.verify_network_interface_properties">[docs]</a>    <span class="k">def</span> <span class="nf">verify_network_interface_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">node</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to verify network interface properties of nodes&#39;&#39;&#39;</span>
+
+        <span class="n">interface_name</span> <span class="o">=</span> <span class="n">node</span><span class="o">+</span><span class="s2">&quot;_interface&quot;</span>
+        <span class="n">interface_list</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_keys_from_node</span><span class="p">(</span><span class="n">interface_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Interface list is : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">interface_list</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">interface</span> <span class="ow">in</span> <span class="n">interface_list</span><span class="p">:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;network port show -node &quot;</span><span class="o">+</span><span class="n">val</span><span class="o">+</span><span class="s2">&quot; -port &quot;</span><span class="o">+</span><span class="n">interface</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;Node: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">val</span><span class="p">)</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;Port: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">interface</span><span class="p">)</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;Link: up&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Found Port : </span><span class="si">%s</span><span class="s2"> with Link status : up&quot;</span> <span class="o">%</span><span class="n">interface</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Keywords.verify_network_vlan"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords.verify_network_vlan">[docs]</a>    <span class="k">def</span> <span class="nf">verify_network_vlan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">node</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to verify network VLAN of nodes&#39;&#39;&#39;</span>
+
+        <span class="n">vlan_name</span> <span class="o">=</span> <span class="n">node</span><span class="o">+</span><span class="s2">&quot;_vlan&quot;</span>
+        <span class="n">vlan_list</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_dict_from_node</span><span class="p">(</span><span class="n">vlan_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;vlan list is : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">vlan_list</span><span class="p">)</span>
+  
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;network port vlan show -node &quot;</span><span class="o">+</span><span class="n">val</span><span class="o">+</span><span class="s2">&quot; -fields vlan-name,vlan-id&quot;</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">vlan_name</span><span class="p">,</span><span class="n">vlan_id</span> <span class="ow">in</span> <span class="n">vlan_list</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">vlan_name</span><span class="p">)</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">vlan_id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Found vlan_name : </span><span class="si">%s</span><span class="s2"> and vlan_id : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">vlan_name</span><span class="p">,</span><span class="n">vlan_id</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Keywords.verify_interface_ip"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords.verify_interface_ip">[docs]</a>    <span class="k">def</span> <span class="nf">verify_interface_ip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">node</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to verify network interface IP&#39;s of nodes&#39;&#39;&#39;</span>
+
+        <span class="n">interface_name</span> <span class="o">=</span> <span class="n">node</span><span class="o">+</span><span class="s2">&quot;_interface&quot;</span>
+        <span class="n">interface_list</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_dict_from_node</span><span class="p">(</span><span class="n">interface_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Interface list is : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">interface_list</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">interface</span><span class="p">,</span><span class="n">ip</span> <span class="ow">in</span> <span class="n">interface_list</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;network interface show -curr-node &quot;</span><span class="o">+</span><span class="n">val</span><span class="o">+</span><span class="s2">&quot; -curr-port &quot;</span><span class="o">+</span><span class="n">interface</span><span class="o">+</span><span class="s2">&quot; -fields address&quot;</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">ip</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Found IP : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">ip</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Keywords.verify_protocols"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords.verify_protocols">[docs]</a>    <span class="k">def</span> <span class="nf">verify_protocols</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">svm</span><span class="p">,</span><span class="n">val</span><span class="p">,</span><span class="n">flag</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to verify protocols on svm&#39;&#39;&#39;</span>
+
+        <span class="n">protocol_name</span> <span class="o">=</span> <span class="n">svm</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="n">flag</span><span class="o">+</span><span class="s2">&quot;_protocols&quot;</span>
+        <span class="n">protocols_list</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_values_from_node</span><span class="p">(</span><span class="n">protocol_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">protocols_list</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;No Protocol found in yaml for &#39;</span><span class="si">%s</span><span class="s2">&#39; category&quot;</span> <span class="o">%</span><span class="n">flag</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Protocols list is : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">protocols_list</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">flag</span><span class="o">==</span><span class="s1">&#39;allowed&#39;</span><span class="p">:</span>
+                <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;vserver show -vserver &quot;</span><span class="o">+</span><span class="n">val</span><span class="o">+</span><span class="s2">&quot; -fields allowed-protocols&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;vserver show -vserver &quot;</span><span class="o">+</span><span class="n">val</span><span class="o">+</span><span class="s2">&quot; -fields disallowed-protocols&quot;</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">protocol</span> <span class="ow">in</span> <span class="n">protocols_list</span><span class="p">:</span>
+                <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">protocol</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Protocol found : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">protocol</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Keywords.verify_svm_volumes"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords.verify_svm_volumes">[docs]</a>    <span class="k">def</span> <span class="nf">verify_svm_volumes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">svm</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to verify svm&#39;s volumes&#39;&#39;&#39;</span>
+
+        <span class="n">volume_name</span> <span class="o">=</span> <span class="n">svm</span><span class="o">+</span><span class="s2">&quot;_volumes&quot;</span>
+        <span class="n">volume_list</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_values_from_node</span><span class="p">(</span><span class="n">volume_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Volume list is : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">volume_list</span><span class="p">)</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;volume show -vserver &quot;</span><span class="o">+</span><span class="n">val</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">volume</span> <span class="ow">in</span> <span class="n">volume_list</span><span class="p">:</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">volume</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Volume found : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">volume</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Keywords.verify_svm_routing_groups"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords.verify_svm_routing_groups">[docs]</a>    <span class="k">def</span> <span class="nf">verify_svm_routing_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">svm</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to verify svm&#39;s routing groups&#39;&#39;&#39;</span>
+
+        <span class="n">route_name</span> <span class="o">=</span> <span class="n">svm</span><span class="o">+</span><span class="s2">&quot;_routing_groups&quot;</span>
+        <span class="n">route_list</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_values_from_node</span><span class="p">(</span><span class="n">route_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Expected Routing Groups : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">route_list</span><span class="p">)</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;network routing-groups show -vserver &quot;</span><span class="o">+</span><span class="n">val</span><span class="o">+</span><span class="s2">&quot; -fields routing-group&quot;</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">route</span> <span class="ow">in</span> <span class="n">route_list</span><span class="p">:</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">route</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;routing group found : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">route</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Keywords.verify_svm_lif"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords.verify_svm_lif">[docs]</a>    <span class="k">def</span> <span class="nf">verify_svm_lif</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">svm</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to verify svm&#39;s lif&#39;&#39;&#39;</span>
+        
+        <span class="n">lif_name</span> <span class="o">=</span> <span class="n">svm</span><span class="o">+</span><span class="s2">&quot;_lif&quot;</span>
+        <span class="n">lif_dict</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_dict_from_node</span><span class="p">(</span><span class="n">lif_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Expected lif&#39;s on svm &#39;</span><span class="si">%s</span><span class="s2">&#39; is : &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="n">lif_dict</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">lif_name</span><span class="p">,</span><span class="n">lif_IP</span> <span class="ow">in</span> <span class="n">lif_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;network interface show -vserver &quot;</span><span class="o">+</span><span class="n">val</span><span class="o">+</span><span class="s2">&quot; -lif &quot;</span><span class="o">+</span><span class="n">lif_name</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">lif_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;lif name found : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">lif_name</span><span class="p">)</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">lif_IP</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;lif IP found : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">lif_IP</span><span class="p">)</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;Operational Status: up&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;lif operational state found as &#39;UP&#39;&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Keywords.verify_svm_export_policy"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords.verify_svm_export_policy">[docs]</a>    <span class="k">def</span> <span class="nf">verify_svm_export_policy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">svm</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to verify svm&#39;s export policy names&#39;&#39;&#39;</span>
+
+        <span class="n">svm_details</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_dict_from_node</span><span class="p">(</span><span class="n">svm</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">svm_details</span><span class="p">[</span><span class="s2">&quot;export_policy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Export policy status True in yaml&quot;</span><span class="p">)</span>
+
+            <span class="n">policy_name</span> <span class="o">=</span> <span class="n">svm</span><span class="o">+</span><span class="s2">&quot;_export-policy&quot;</span>
+            <span class="n">policy_list</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_values_from_node</span><span class="p">(</span><span class="n">policy_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Policy list is : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">policy_list</span><span class="p">)</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;vserver export-policy rule show -vserver &quot;</span><span class="o">+</span><span class="n">val</span><span class="o">+</span><span class="s2">&quot; -fields policyname&quot;</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">policy</span> <span class="ow">in</span> <span class="n">policy_list</span><span class="p">:</span>
+                <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">policy</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Policy found : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">policy</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Export policy status False in yaml&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Keywords.verify_svm_peering"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords.verify_svm_peering">[docs]</a>    <span class="k">def</span> <span class="nf">verify_svm_peering</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">svm</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to verify svm peering&#39;&#39;&#39;</span>
+
+        <span class="n">svm_details</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_dict_from_node</span><span class="p">(</span><span class="n">svm</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">svm_details</span><span class="p">[</span><span class="s2">&quot;peering&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Peering status True in yaml&quot;</span><span class="p">)</span>
+            
+            <span class="n">peer_name</span> <span class="o">=</span> <span class="n">svm</span><span class="o">+</span><span class="s2">&quot;_peering&quot;</span>
+            <span class="n">peer_list</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_values_from_node</span><span class="p">(</span><span class="n">peer_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Peer is : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">peer_list</span><span class="p">)</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;vserver peer show -vserver &quot;</span><span class="o">+</span><span class="n">val</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">peer</span> <span class="ow">in</span> <span class="n">peer_list</span><span class="p">:</span>
+                <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">peer</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Peer found : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">peer</span><span class="p">)</span>
+                <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;peered&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Peering status False in yaml&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Keywords.verify_svm_volumes_details"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords.verify_svm_volumes_details">[docs]</a>    <span class="k">def</span> <span class="nf">verify_svm_volumes_details</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">svm</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to verify svm&#39;s volumes&#39;&#39;&#39;</span>
+    
+        <span class="n">volumes_name</span> <span class="o">=</span> <span class="n">svm</span><span class="o">+</span><span class="s2">&quot;_volumes&quot;</span>
+        <span class="n">volumes_dict</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_dict_from_node</span><span class="p">(</span><span class="n">volumes_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Volumes dict is : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">volumes_dict</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">vol_key</span><span class="p">,</span><span class="n">vol_val</span> <span class="ow">in</span> <span class="n">volumes_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">vol_name</span> <span class="o">=</span> <span class="n">svm</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="n">vol_key</span><span class="o">+</span><span class="s2">&quot;_details&quot;</span>
+            <span class="n">vol_details</span><span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_dict_from_node</span><span class="p">(</span><span class="n">vol_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Volume details for &#39;</span><span class="si">%s</span><span class="s2">&#39; volume is  :- </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">vol_val</span><span class="p">,</span><span class="n">vol_details</span><span class="p">))</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;volume show -vserver &quot;</span><span class="o">+</span><span class="n">val</span><span class="o">+</span><span class="s2">&quot; -volume &quot;</span><span class="o">+</span><span class="n">vol_val</span><span class="o">+</span><span class="s2">&quot; -fields state,type,language,junction-path&quot;</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+            
+            <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">vol_details</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Found : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">result</span><span class="p">)</span></div>
+            
+
+<div class="viewcode-block" id="Keywords.verify_cluster_configuration"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords.verify_cluster_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">verify_cluster_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dict1</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used for verifying configuartion of the cluster</span>
+<span class="sd">           It checks the configuration based on no. of nodes&#39;&#39;&#39;</span>
+
+        <span class="n">nodes_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dict1</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">nodes_count</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;cluster ha show&quot;</span><span class="p">)</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;High Availability Configured: true&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;cluster in HA pair&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">epsilon_node</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_values_from_node</span><span class="p">(</span><span class="s2">&quot;epsilon_node&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">dict1</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;cluster show -node &quot;</span><span class="o">+</span><span class="n">v</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+                <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="s2">&quot;Node: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">v</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Found node name : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">v</span><span class="p">)</span>
+                <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="s2">&quot;Eligibility: true&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Found node Eligibility: true&quot;</span><span class="p">)</span>
+                <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="s2">&quot;Health: true&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Found node Health: true&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="n">epsilon_node</span><span class="p">:</span>
+                    <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="s2">&quot;Epsilon: true&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Found node Epsilon: true for node </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">v</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Keywords.verify_nfs_configuration"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords.verify_nfs_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">verify_nfs_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">svm</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to verify svm&#39;s NFS configuration&#39;&#39;&#39;</span>
+
+        <span class="n">svm_details</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_dict_from_node</span><span class="p">(</span><span class="n">svm</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">svm_details</span><span class="p">[</span><span class="s2">&quot;nfs_enabled&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;NFS status is enabled in yaml&quot;</span><span class="p">)</span>
+
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;vserver nfs show -instance -vserver &quot;</span><span class="o">+</span><span class="n">val</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;General NFS Access: true&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;NFS status is NOT enabled in yaml&quot;</span><span class="p">)</span></div>
+   
+    
+<div class="viewcode-block" id="Keywords.verify_cifs_configuration"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords.verify_cifs_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">verify_cifs_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">svm</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to verify svm&#39;s CIFS configuration&#39;&#39;&#39;</span>
+
+        <span class="n">svm_details</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_dict_from_node</span><span class="p">(</span><span class="n">svm</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">svm_details</span><span class="p">[</span><span class="s2">&quot;cifs_enabled&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;CIFS status is enabled in yaml&quot;</span><span class="p">)</span>
+
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;vserver cifs show -instance -vserver &quot;</span><span class="o">+</span><span class="n">val</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;CIFS Server Administrative Status: up&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;CIFS status is NOT enabled in yaml&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="Keywords.verify_iscsi_configuration"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords.verify_iscsi_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">verify_iscsi_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">svm</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to verify svm&#39;s ISCSI configuration&#39;&#39;&#39;</span>
+
+        <span class="n">svm_details</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_dict_from_node</span><span class="p">(</span><span class="n">svm</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">svm_details</span><span class="p">[</span><span class="s2">&quot;iscsi_enabled&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;ISCSI status is enabled in yaml&quot;</span><span class="p">)</span>
+
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;vserver iscsi show -instance -vserver &quot;</span><span class="o">+</span><span class="n">val</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;Administrative Status: up&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;ISCSI status is NOT enabled in yaml&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Keywords.verify_ndmp_configuration"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords.verify_ndmp_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">verify_ndmp_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">svm</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to verify svm&#39;s ndmp configuration&#39;&#39;&#39;</span>
+
+        <span class="n">svm_details</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_dict_from_node</span><span class="p">(</span><span class="n">svm</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">svm_details</span><span class="p">[</span><span class="s2">&quot;ndmp_enabled&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;NDMP status is enabled in yaml&quot;</span><span class="p">)</span>
+
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;vserver ndmp show -instance -vserver &quot;</span><span class="o">+</span><span class="n">val</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;Enable NDMP on Vserver: true&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;NDMP status is NOT enabled in yaml&quot;</span><span class="p">)</span></div>
+   
+
+<div class="viewcode-block" id="Keywords.verify_hwassist_show"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords.verify_hwassist_show">[docs]</a>    <span class="k">def</span> <span class="nf">verify_hwassist_show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">output</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to verify the hwassist show output</span>
+<span class="sd">           in order to check the partner nodes&#39;&#39;&#39;</span>
+        
+        <span class="n">node_dict</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_dict_from_node</span><span class="p">(</span><span class="s2">&quot;Node&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">node</span><span class="p">,</span><span class="n">detail</span> <span class="ow">in</span> <span class="n">node_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_dict_from_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Checking node : &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span><span class="n">node_dict</span><span class="p">[</span><span class="n">node</span><span class="p">])</span>            
+            <span class="k">if</span> <span class="n">val</span><span class="p">[</span><span class="s2">&quot;HA_pair&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Node is in HA pair mentioned in yaml&quot;</span><span class="p">)</span>
+                <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;Partner : &quot;</span><span class="o">+</span><span class="n">val</span><span class="p">[</span><span class="s2">&quot;Partner_node&quot;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;partner node found &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span><span class="n">val</span><span class="p">[</span><span class="s2">&quot;Partner_node&quot;</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Node not in HA pair as mentioned in yaml&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Keywords.verify_hwassist_test"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords.verify_hwassist_test">[docs]</a>    <span class="k">def</span> <span class="nf">verify_hwassist_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">node</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to verify the hwassist on each node&#39;&#39;&#39;</span>
+
+        <span class="n">node_details</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_dict_from_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Checking node : &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">node_details</span><span class="p">[</span><span class="s2">&quot;HA_pair&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Node is in HA pair mentioned in yaml&quot;</span><span class="p">)</span>
+
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;hwassist test -node &quot;</span><span class="o">+</span><span class="n">val</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;Operation successful&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Node not in HA pair as mentioned in yaml&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Keywords.verify_takeover_option"><a class="viewcode-back" href="../../modules.html#lib.Keywords.Keywords.verify_takeover_option">[docs]</a>    <span class="k">def</span> <span class="nf">verify_takeover_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">node</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to verify failover node details&#39;&#39;&#39;</span>
+
+        <span class="n">node_details</span> <span class="o">=</span> <span class="n">Readdata</span><span class="p">()</span><span class="o">.</span><span class="n">get_dict_from_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Checking node : &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">node_details</span><span class="p">[</span><span class="s2">&quot;HA_pair&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Node is in HA pair mentioned in yaml&quot;</span><span class="p">)</span>
+
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;storage failover show -node &quot;</span><span class="o">+</span><span class="n">val</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;Node: &quot;</span><span class="o">+</span><span class="n">val</span><span class="p">)</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;Partner Name: &quot;</span><span class="o">+</span><span class="n">node_details</span><span class="p">[</span><span class="s2">&quot;Partner_node&quot;</span><span class="p">])</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;Takeover Enabled: true&quot;</span><span class="p">)</span>
+            <span class="n">BuiltIn</span><span class="p">()</span><span class="o">.</span><span class="n">should_contain</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;State Description: Connected to &quot;</span><span class="o">+</span><span class="n">node_details</span><span class="p">[</span><span class="s2">&quot;Partner_node&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Found Partner node : &#39;</span><span class="si">%s</span><span class="s2">&#39; with connected state&quot;</span> <span class="o">%</span><span class="n">node_details</span><span class="p">[</span><span class="s2">&quot;Partner_node&quot;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Node not in HA pair as mentioned in yaml&quot;</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Netapp_Test_Automation</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Customlib library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html#module-lib.Keywords">Keywords library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html#module-lib.Netapplib">Netapplib library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html#module-lib.Readdata">Readdata library</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Deepak Chandella.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

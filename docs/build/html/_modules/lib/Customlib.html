@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>lib.Customlib &#8212; Netapp_Test_Automation v1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for lib.Customlib</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">robot</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">robot.libraries.BuiltIn</span> <span class="kn">import</span> <span class="n">BuiltIn</span>
+<span class="kn">from</span> <span class="nn">SSHLibrary.config</span> <span class="kn">import</span> <span class="n">ConfigurationException</span>
+
+<div class="viewcode-block" id="Customlib"><a class="viewcode-back" href="../../modules.html#lib.Customlib.Customlib">[docs]</a><span class="k">class</span> <span class="nc">Customlib</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Custom class to create Setup and Teradown methods &#39;&#39;&#39;</span>
+    <span class="c1">#sshlib = BuiltIn().get_library_instance(&#39;SSHLibrary&#39;)</span>
+
+<div class="viewcode-block" id="Customlib.Open_Connection_And_Log_In"><a class="viewcode-back" href="../../modules.html#lib.Customlib.Customlib.Open_Connection_And_Log_In">[docs]</a>    <span class="k">def</span> <span class="nf">Open_Connection_And_Log_In</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Open a New SSH Connection to the host machine and login with </span>
+<span class="sd">        provided username and password &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">open_connection</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Customlib.Check_Version"><a class="viewcode-back" href="../../modules.html#lib.Customlib.Customlib.Check_Version">[docs]</a>    <span class="k">def</span> <span class="nf">Check_Version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">version</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Checks the Netapp version if found supported version PASS the test else FAIL the test&#39;&#39;&#39;</span>
+        <span class="n">ver</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;version&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">version</span> <span class="ow">in</span> <span class="n">ver</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Supported version found on Netapp&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CustomFatalError</span><span class="p">(</span><span class="s2">&quot;Supported version not found on Netapp&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Customlib.set_terminal"><a class="viewcode-back" href="../../modules.html#lib.Customlib.Customlib.set_terminal">[docs]</a>    <span class="k">def</span> <span class="nf">set_terminal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Sets the terminal output &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Executing command -- &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">cmd</span><span class="p">)</span>        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">set_client_configuration</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;::&gt;&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">read_until_prompt</span><span class="p">()</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">status</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="s1">&#39;::&gt;&#39;</span> <span class="ow">in</span> <span class="n">status</span><span class="p">:</span>
+                 <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Terminal is set to &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">cmd</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ConfigurationException</span><span class="p">(</span><span class="s2">&quot;Terminal is not set&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">ConfigurationException</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Terminal is not set to &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">cmd</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Customlib.set_diag_mode"><a class="viewcode-back" href="../../modules.html#lib.Customlib.Customlib.set_diag_mode">[docs]</a>    <span class="k">def</span> <span class="nf">set_diag_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method will set the diag mode on Netapp&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Executing command -- &#39;set diag&#39;&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">set_client_configuration</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;set diag&#39;</span><span class="p">)</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">read_until_prompt</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">set_client_configuration</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">&#39;::*&gt;&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">read_until_prompt</span><span class="p">()</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">status</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="s1">&#39;::*&gt;&#39;</span> <span class="ow">in</span> <span class="n">status</span><span class="p">:</span>
+                 <span class="bp">self</span><span class="o">.</span><span class="n">sshlib</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Terminal is set to &#39;diag mode&#39;&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ConfigurationException</span><span class="p">(</span><span class="s2">&quot;Terminal is not set to diag mode&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">ConfigurationException</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Terminal is not set to &#39;diag mode&#39;&quot;</span><span class="p">)</span></div></div>
+
+        
+<div class="viewcode-block" id="CustomFatalError"><a class="viewcode-back" href="../../modules.html#lib.Customlib.CustomFatalError">[docs]</a><span class="k">class</span> <span class="nc">CustomFatalError</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Raises FATAL Error &#39;&#39;&#39;</span>
+    <span class="n">ROBOT_EXIT_ON_FAILURE</span> <span class="o">=</span> <span class="kc">True</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Netapp_Test_Automation</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Customlib library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html#module-lib.Keywords">Keywords library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html#module-lib.Netapplib">Netapplib library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html#module-lib.Readdata">Readdata library</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Deepak Chandella.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

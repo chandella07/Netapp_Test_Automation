@@ -4,7 +4,7 @@ from SSHLibrary.config import ConfigurationException
 
 class Customlib(object):
     ''' Custom class to create Setup and Teradown methods '''
-    sshlib = BuiltIn().get_library_instance('SSHLibrary')
+    #sshlib = BuiltIn().get_library_instance('SSHLibrary')
 
     def Open_Connection_And_Log_In(self, host, username, password):
         ''' Open a New SSH Connection to the host machine and login with 
@@ -22,7 +22,7 @@ class Customlib(object):
 
     def set_terminal(self, cmd):
         ''' Sets the terminal output '''
-	self.sshlib._log("Executing command -- '%s'" % cmd)        
+        self.sshlib._log("Executing command -- '%s'" % cmd)        
         try:
             self.sshlib.set_client_configuration(prompt='::>')
             self.sshlib.write(cmd)
