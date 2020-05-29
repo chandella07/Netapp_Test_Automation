@@ -9,6 +9,8 @@ These tests can be performed on newly deployed Netapp cluster to check if the cl
 Current testcases are based on netapp cli and supported with NetApp Release 8.3.2,
 It can support further releases as well, based on cli changes the test verifications need to be modified.
 
+For modules and library documentation, go to docs-->build-->html folder and open index.html
+
 Technologies
 ============
 
