@@ -1,6 +1,5 @@
 
-Netapp Test Automation
-======================
+# Netapp Test Automation
 
 This Framework contains automated test cases written in robotframework supported by custom python libraries.
 
@@ -15,9 +14,9 @@ Technologies
 ============
 
 > Language: **Python**
-
+>
 > Test automation framework: **Robotframework** 
-
+>
 > Libraries: **SSHlibrary**
 
 Directory structure
